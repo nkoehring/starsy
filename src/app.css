@@ -1,0 +1,101 @@
+@font-face {
+  font-family: 'douar';
+  src: url('./assets/douaroutline-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'lack';
+  src: url('./assets/lack-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'xolonium';
+  src: url('./assets/xolonium-regular-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+html,body {
+  display: block;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #333;
+  color: #EEE;
+}
+
+body.theme-retro {
+  background: #4B4839;
+  color: #E4DCB5;
+}
+body.theme-inverse {
+  background: #333;
+  color: #E4DCB5;
+}
+body.theme-paper {
+  background: #FFF;
+  color: #000;
+}
+
+.title-douar { font-family: 'douar'; }
+.title-lack { font-family: 'lack'; }
+.title-xolonium { font-family: 'xolonium'; }
+
+svg { background: #000; }
+line { stroke: #FFF; }
+#axis { stroke-width: 1; }
+#label { fill: #FFF; text-anchor: end; }
+#star { fill: #FFB; }
+.object { fill: #FFF; text-anchor: middle; font-size: .6em; }
+.moon { text-anchor: start; font-size: .7em; }
+.object > line { stroke-width: .5; }
+
+.theme-retro svg { background: #E4DCB5; }
+.theme-retro line { stroke: #4B4839; }
+.theme-retro #label,
+.theme-retro #star,
+.theme-retro .object {
+  fill: #4B4839;
+}
+
+.theme-inverse svg { background: #4B4839; }
+.theme-inverse line { stroke: #E4DCB5; }
+.theme-inverse #label,
+.theme-inverse #star,
+.theme-inverse .object {
+  fill: #E4DCB5;
+}
+
+.theme-paper svg { background: #FFF; }
+.theme-paper line { stroke: #000; }
+.theme-paper #label,
+.theme-paper #star,
+.theme-paper .object {
+  fill: #000;
+}
+
+#app > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2em;
+  font-family: xolonium;
+}
+#app > header label {
+  margin: 0 0 0 1em;
+}
+.headline {
+  display: flex;
+  align-items: center;
+}
+
+#settings {
+  padding: 1em 2em;
+}
