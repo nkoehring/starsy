@@ -19,6 +19,15 @@
   font-style: normal;
 }
 
+:root {
+  --bg-graphic: #000;
+  --fg-graphic: #FFF;
+  --bg-app: #333;
+  --fg-app: #EEE;
+  --fill-star: #FFB;
+  --title-font: xolonium;
+}
+
 html,body {
   display: block;
   margin: 0;
@@ -27,64 +36,50 @@ html,body {
   font-family: sans;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #333;
-  color: #EEE;
+  background: var(--bg-app);
+  color: var(--fg-app);
 }
 
 body.theme-retro {
-  background: #4B4839;
-  color: #E4DCB5;
+  --bg-app: #4B4839;
+  --fg-app: #E4DCB5;
+  --bg-graphic: #E4DCB5;
+  --fg-graphic: #4B4839;
+  --fill-star: var(--fg-graphic);
 }
 body.theme-inverse {
-  background: #333;
-  color: #E4DCB5;
+  --bg-app: #333;
+  --fg-app: #E4DCB5;
+  --bg-graphic: #4B4839;
+  --fg-graphic: #E4DCB5;
+  --fill-star: var(--fg-graphic);
 }
 body.theme-paper {
-  background: #FFF;
-  color: #000;
+  --bg-app: #FFF;
+  --fg-app: #000;
+  --bg-graphic: #FFF;
+  --fg-graphic: #000;
+  --fill-star: var(--fg-graphic);
 }
 
 .title-douar { font-family: 'douar'; }
 .title-lack { font-family: 'lack'; }
 .title-xolonium { font-family: 'xolonium'; }
 
-svg { background: #000; }
-line { stroke: #FFF; }
+svg { background: var(--bg-graphic); }
+line { stroke: var(--fg-graphic); }
+text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: left top; transform-box: fill-box; }
 #axis { stroke-width: 1; }
-#label { fill: #FFF; text-anchor: end; }
-#star { fill: #FFB; }
-.object { fill: #FFF; text-anchor: middle; font-size: .6em; }
+#label { fill: var(--fg-graphic); text-anchor: end; }
+#star { fill: var(--fill-star); }
+.object { fill: var(--fg-graphic); text-anchor: middle; font-size: .6em; }
 .moon { text-anchor: start; font-size: .7em; }
 .object > line { stroke-width: .5; }
-.rings { stroke: #FFF; fill: none; transform: skew(-45deg); transform-origin: 50%; }
+.rings { stroke: var(--fg-graphic); fill: none; transform: skew(-45deg); transform-origin: 50%; }
 
-.theme-retro svg { background: #E4DCB5; }
-.theme-retro line { stroke: #4B4839; }
-.theme-retro #label,
-.theme-retro #star,
-.theme-retro .object {
-  fill: #4B4839;
+h1 {
+  font-family: xolonium;
 }
-.theme-retro .rings { stroke: #4B4839; }
-
-.theme-inverse svg { background: #4B4839; }
-.theme-inverse line { stroke: #E4DCB5; }
-.theme-inverse #label,
-.theme-inverse #star,
-.theme-inverse .object {
-  fill: #E4DCB5;
-}
-.theme-inverse .rings { stroke: #E4DCB5; }
-
-.theme-paper svg { background: #FFF; }
-.theme-paper line { stroke: #000; }
-.theme-paper #label,
-.theme-paper #star,
-.theme-paper .object {
-  fill: #000;
-}
-.theme-paper .rings { stroke: #000; }
-
 #app > header {
   display: flex;
   justify-content: space-between;
