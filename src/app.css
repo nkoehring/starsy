@@ -22,9 +22,12 @@
 :root {
   --bg-graphic: #000;
   --fg-graphic: #FFF;
+  --hl-graphic: #FFB;
   --bg-app: #333;
   --fg-app: #EEE;
   --fill-star: #FFB;
+  --bg-settings: var(--bg-graphic);
+  --fg-settings: var(--fg-graphic);
   --title-font: xolonium;
 }
 
@@ -45,37 +48,77 @@ body.theme-retro {
   --fg-app: #E4DCB5;
   --bg-graphic: #E4DCB5;
   --fg-graphic: #4B4839;
+  --hl-graphic: #222;
   --fill-star: var(--fg-graphic);
+  --bg-settings: var(--bg-graphic);
+  --fg-settings: var(--fg-graphic);
 }
 body.theme-inverse {
   --bg-app: #333;
   --fg-app: #E4DCB5;
   --bg-graphic: #4B4839;
   --fg-graphic: #E4DCB5;
+  --hl-graphic: #FF0;
   --fill-star: var(--fg-graphic);
+  --bg-settings: var(--bg-graphic);
+  --fg-settings: var(--fg-graphic);
 }
 body.theme-paper {
   --bg-app: #FFF;
   --fg-app: #000;
   --bg-graphic: #FFF;
   --fg-graphic: #000;
+  --hl-graphic: #555;
   --fill-star: var(--fg-graphic);
+  --bg-settings: #DDD;
+  --fg-settings: #000;
 }
 
 .title-douar { font-family: 'douar'; }
 .title-lack { font-family: 'lack'; }
 .title-xolonium { font-family: 'xolonium'; }
 
+.menu-item {
+  padding: 1em;
+}
+.menu-item > label {
+  cursor: pointer;
+}
+.menu-item > label::before {
+  content: "▸ ";
+}
+.menu-item.open > label::before {
+  content: "▾ ";
+}
+.menu-item.open {
+  background: var(--bg-settings);
+  color: var(--fg-settings);
+}
+.menu-item > .object-settings {
+  display: none;
+  position: absolute;
+  left: 0;
+  width: calc(100vw - 4em);
+  margin-top: 1em;
+  padding: 1em 2em;
+  background: var(--bg-graphic);
+}
+.menu-item.open > .object-settings {
+  display: block;
+}
+
 svg { background: var(--bg-graphic); }
 line { stroke: var(--fg-graphic); }
 text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: left top; transform-box: fill-box; }
 #axis { stroke-width: 1; }
-#label { fill: var(--fg-graphic); text-anchor: end; }
+#designation { fill: var(--fg-graphic); text-anchor: end; }
 #star { fill: var(--fill-star); }
-.object { fill: var(--fg-graphic); text-anchor: middle; font-size: .6em; }
-.moon { text-anchor: start; font-size: .7em; }
+.object { fill: var(--fg-graphic); text-anchor: middle; font-size: .6em; cursor: pointer; }
 .object > line { stroke-width: .5; }
+.moon { text-anchor: start; font-size: .7em; }
 .rings { stroke: var(--fg-graphic); fill: none; transform: skew(-45deg); transform-origin: 50%; }
+.object:hover { fill: var(--hl-graphic); }
+.object:hover > line, .object:hover .rings { stroke: var(--hl-graphic); }
 
 h1 {
   font-family: xolonium;
@@ -97,4 +140,31 @@ h1 {
 
 #settings {
   padding: 1em 2em;
+}
+#settings > header {
+  display: flex;
+}
+#settings > header > h1 {
+  min-width: 330px;
+}
+
+#system-settings, #object-list {
+  display: flex;
+  width: calc(100vw - 4em);
+  padding: 0;
+  list-style: none;
+}
+
+#system-settings > label {
+  display: flex;
+  align-items: center;
+  min-width: 300px;
+  margin: 0 1em;
+}
+#system-settings input {
+  width: 220px;
+}
+#system-settings input[type="text"] {
+  margin-left: 1em;
+  padding: .5em 1em .4em;
 }

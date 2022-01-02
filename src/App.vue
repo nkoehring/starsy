@@ -22,14 +22,14 @@
 
   <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 300">
     <line id="axis" x1="0" y1="150" x2="1000" y2="150" />
-    <circle id="star" r="400" cx="-370" cy="150" />
+    <circle id="star" :r="star.radius" :cx="starCX" cy="150" />
 
     <g class="object" :id="o.name" v-for="o in objects">
       <g class="rings" v-for="i in o.rings">
         <circle :r="o.radius - 5 + 2*i" :cx="o.distance" cy="150" />
       </g>
 
-      <text :x="o.distance" :y="140 - o.radius">{{ o.name }}</text>
+      <text :class="{ tilted: o.radius < 10 }" :x="o.distance" :y="140 - o.radius">{{ o.name }}</text>
       <circle v-if="o.type === 'planet'" :r="o.radius" :cx="o.distance" cy="150" />
       <line v-if="o.moons.length" :x1="o.distance" y1="150" :x2="o.distance" :y2="150 + o.radius + 10*o.moons.length" />
 
@@ -41,20 +41,52 @@
 
     </g>
 
-    <text id="label" :class="`title-${selectedFont}`" x="980" y="30">{{ label }}</text>
+    <text id="designation" :class="`title-${selectedFont}`" x="980" y="30">{{ star.designation }}</text>
   </svg>
 
-  <div id="settings">
-  </div>
+  <section id="settings">
+    <header>
+      <h1>Star System Parameters</h1>
+      <menu id="system-settings">
+        <label>
+          Name
+          <input type="text" v-model="star.designation" />
+        </label>
+        <label>
+          Star Size
+          <input type="range" min="50" max="1500" v-model="star.radius" />
+          ({{ star.radius }})
+        </label>
+      </menu>
+    </header>
+    <menu id="object-list">
+      <div class="menu-item" :class="{ open: selectedObject === o }" v-for="o in objects">
+        <label @click="toggleObject(o)">{{ o.name }}</label>
+        <div class="object-settings">
+          <h2>{{ o.name }} settings</h2>
+          <p>Distance from central star: {{ o.distance }}</p>
+          <p>Radius: {{ o.radius }}</p>
+          <p>Moons and Stations: {{ listMoons(o) }}</p>
+        </div>
+      </div>
+      <button>add object</button>
+    </menu>
+  </section>
 
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, reactive, computed } from 'vue'
+import steepCurve from './steep-curve'
 
-const label = "Sol"
+const star = reactive({
+  designation: 'Sol',
+  radius: 400,
+})
 
-const objects = [
+const starCX = computed(() => -1 * star.radius * steepCurve(star.radius, 50, 0.955))
+
+const objects = ref([
   { type: 'planet', name: 'Mercury', radius: 1, distance: 100, moons: [], rings: [] },
   { type: 'planet', name: 'Venus', radius: 4, distance: 120, moons: [], rings: [] },
   { type: 'planet', name: 'Terra', radius: 4, distance: 140, moons: [
@@ -91,10 +123,16 @@ const objects = [
   { type: 'planet', name: 'Neptune', radius: 15, distance: 950, moons: [
     { name: 'Triton', radius: 1 },
   ], rings: [] },
-]
+])
+
+const selectedObject = ref(null)
+
+function toggleObject (obj) {
+  selectedObject.value = selectedObject.value === obj ? null : obj
+}
 
 const labelFonts = ['douar', 'lack', 'xolonium']
-const selectedFont = ref('lack')
+const selectedFont = ref('xolonium')
 
 const themes = ['default', 'retro', 'inverse', 'paper']
 const selectedTheme = ref('default')
@@ -102,4 +140,15 @@ const selectedTheme = ref('default')
 function setTheme () {
   document.body.className = `theme-${selectedTheme.value}`
 }
+
+function listMoons (obj) {
+  if (!obj.moons || !obj.moons.length) return 'none'
+  return obj.moons.reduce((acc, moon) => {
+    let s = moon.name
+    if (moon.type) s += ` (${moon.type})`
+    acc.push(s)
+    return acc
+  }, []).join('; ')
+}
+setTheme()
 </script>
