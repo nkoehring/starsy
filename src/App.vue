@@ -67,15 +67,20 @@
             <h2><input type="text" v-model="o.name" @blur="checkName(o)"/> settings</h2>
             <p>Distance Δ: {{ o.distance }}</p>
             <p>Radius r: {{ o.radius }}</p>
+            <p>Rings ⬭: {{ o.rings > 0 ? o.rings : 'none' }}</p>
             <p>Satellites: {{ listSatellites(o) }}</p>
           </header>
           <label>
-            Δ
+            <span>Δ</span>
             <input class="planet-distance" type="range" min="50" max="1000" v-model="o.distance" />
           </label>
           <label>
-            r
+            <span>r</span>
             <input class="planet-radius" type="range" min="1" max="125" v-model="o.radius" />
+          </label>
+          <label>
+            <span>⬭</span>
+            <input class="planet-rings" type="number" min="0" max="15" v-model="o.rings" />
           </label>
         </div>
       </div>
@@ -97,8 +102,8 @@ const star = reactive({
 const starCX = computed(() => -1 * star.radius * steepCurve(star.radius, 50, 0.955))
 
 const objects = ref([
-  { type: 'planet', name: 'Mercury', radius: 1, distance: 100, satellites: [], rings: [] },
-  { type: 'planet', name: 'Venus', radius: 4, distance: 120, satellites: [], rings: [] },
+  { type: 'planet', name: 'Mercury', radius: 1, distance: 100, satellites: [], rings: 0 },
+  { type: 'planet', name: 'Venus', radius: 4, distance: 120, satellites: [], rings: 0 },
   { type: 'planet', name: 'Terra', radius: 4, distance: 140, satellites: [
     { name: 'ISS', type: 'station' },
     { name: 'Luna', radius: 2 },
@@ -132,7 +137,7 @@ const objects = ref([
   ], rings: 2 },
   { type: 'planet', name: 'Neptune', radius: 15, distance: 950, satellites: [
     { name: 'Triton', radius: 1 },
-  ], rings: [] },
+  ], rings: 0 },
 ])
 
 const selectedObject = ref(null)

@@ -195,5 +195,9 @@ h1 {
   font-size: 1em;
   font-weight: bold;
 }
+.object-settings > label > span {
+  width: 2em;
+}
 .object-settings .planet-distance { width: 100%; }
 .object-settings .planet-radius { width: 100%; }
+.object-settings .planet-rings { width: 3em; padding: .2em; }
