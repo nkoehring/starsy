@@ -29,7 +29,8 @@
       <circle v-if="o.type === 'planet'" :r="o.radius" :cx="o.distance" cy="150" />
       <line v-if="o.moons.length" :x1="o.distance" y1="150" :x2="o.distance" :y2="150 + o.radius + 10*o.moons.length" />
       <g class="moon" v-for="m,i in o.moons">
-        <circle :r="m.radius" :cx="o.distance" :cy="160 + o.radius + 10*i" />
+        <rect v-if="m.type === 'station'" class="station" :x="o.distance - 2" :y="158 + o.radius + 10*i" width="4" height="4" />
+        <circle v-else :r="m.radius" :cx="o.distance" :cy="160 + o.radius + 10*i" />
         <text :x="o.distance + 5" :y="162 + o.radius + 10*i">{{ m.name }}</text>
       </g>
     </g>
@@ -51,15 +52,13 @@ const objects = [
   { type: 'planet', name: 'Mercury', radius: 1, distance: 100, moons: [], stations: [] },
   { type: 'planet', name: 'Venus', radius: 4, distance: 120, moons: [], stations: [] },
   { type: 'planet', name: 'Terra', radius: 4, distance: 140, moons: [
+    { name: 'ISS', type: 'station' },
     { name: 'Luna', radius: 2 },
-  ], stations: [
-    { name: 'ISS' },
   ] },
   { type: 'planet', name: 'Mars', radius: 2, distance: 160, moons: [
+    { name: 'MTO', type: 'station' },
     { name: 'Phobos', radius: 1 },
     { name: 'Daimos', radius: 1 },
-  ], stations: [
-    { name: 'MTS' },
   ] },
   { type: 'planet', name: 'Jupiter', radius: 40, distance: 260, moons: [
     { name: 'Io', radius: 2 },
