@@ -1,4 +1,4 @@
-# RASTSYG
+# Starsy
 
 **Random Star System Generator**
 
