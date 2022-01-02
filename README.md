@@ -13,5 +13,5 @@ Title fonts are from [fontlibrary.org](https://fontlibrary.org/):
  * [xolonium](https://fontlibrary.org/en/font/xolonium)
  * [douar-outline](https://fontlibrary.org/en/font/douar-outline)
 
-and optimized with the [FontSquirrel webfont generator](https://www.fontsquirrel.com/tools/webfont-generator).
+Fonts are optimized with the [FontSquirrel webfont generator](https://www.fontsquirrel.com/tools/webfont-generator).
 
