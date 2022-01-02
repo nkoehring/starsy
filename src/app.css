@@ -43,6 +43,16 @@ html,body {
   color: var(--fg-app);
 }
 
+input[type="text"] {
+  background: transparent;
+  border: 1px solid var(--fg-app);
+  color: var(--fg-app);
+}
+input[type="text"]:focus {
+  outline: 2px solid var(--fg-app);
+  border: 1px solid #FFF5;
+}
+
 body.theme-retro {
   --bg-app: #4B4839;
   --fg-app: #E4DCB5;
@@ -115,7 +125,7 @@ text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: le
 #star { fill: var(--fill-star); }
 .object { fill: var(--fg-graphic); text-anchor: middle; font-size: .6em; cursor: pointer; }
 .object > line { stroke-width: .5; }
-.moon { text-anchor: start; font-size: .7em; }
+.satellite { text-anchor: start; font-size: .7em; }
 .rings { stroke: var(--fg-graphic); fill: none; transform: skew(-45deg); transform-origin: 50%; }
 .object:hover { fill: var(--hl-graphic); }
 .object:hover > line, .object:hover .rings { stroke: var(--hl-graphic); }
@@ -141,8 +151,9 @@ h1 {
 #settings {
   padding: 1em 2em;
 }
-#settings > header {
+#settings > header, .object-settings > header {
   display: flex;
+  align-items: center;
 }
 #settings > header > h1 {
   min-width: 330px;
@@ -150,6 +161,7 @@ h1 {
 
 #system-settings, #object-list {
   display: flex;
+  align-items: center;
   width: calc(100vw - 4em);
   padding: 0;
   list-style: none;
@@ -161,10 +173,27 @@ h1 {
   min-width: 300px;
   margin: 0 1em;
 }
-#system-settings input {
-  width: 220px;
-}
+#system-settings button { height: 2em; }
+#system-settings input { width: 220px; }
 #system-settings input[type="text"] {
   margin-left: 1em;
   padding: .5em 1em .4em;
 }
+
+.object-settings > header > p {
+  margin-left: 2em;
+  padding-top: .37em;
+}
+
+.object-settings > label {
+  display: flex;
+  align-items: center;
+}
+.object-settings > header input[type="text"] {
+  width: 7em;
+  padding: .1em .5em;
+  font-size: 1em;
+  font-weight: bold;
+}
+.object-settings .planet-distance { width: 100%; }
+.object-settings .planet-radius { width: 100%; }

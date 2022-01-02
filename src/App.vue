@@ -31,9 +31,9 @@
 
       <text :class="{ tilted: o.radius < 10 }" :x="o.distance" :y="140 - o.radius">{{ o.name }}</text>
       <circle v-if="o.type === 'planet'" :r="o.radius" :cx="o.distance" cy="150" />
-      <line v-if="o.moons.length" :x1="o.distance" y1="150" :x2="o.distance" :y2="150 + o.radius + 10*o.moons.length" />
+      <line v-if="o.satellites.length" :x1="o.distance" y1="150" :x2="o.distance" :y2="150 + o.radius + 10*o.satellites.length" />
 
-      <g class="moon" v-for="m,i in o.moons">
+      <g class="satellite" v-for="m,i in o.satellites">
         <rect v-if="m.type === 'station'" class="station" :x="o.distance - 2" :y="158 + o.radius + 10*i" width="4" height="4" />
         <circle v-else :r="m.radius" :cx="o.distance" :cy="160 + o.radius + 10*i" />
         <text :x="o.distance + 5" :y="162 + o.radius + 10*i">{{ m.name }}</text>
@@ -63,10 +63,20 @@
       <div class="menu-item" :class="{ open: selectedObject === o }" v-for="o in objects">
         <label @click="toggleObject(o)">{{ o.name }}</label>
         <div class="object-settings">
-          <h2>{{ o.name }} settings</h2>
-          <p>Distance from central star: {{ o.distance }}</p>
-          <p>Radius: {{ o.radius }}</p>
-          <p>Moons and Stations: {{ listMoons(o) }}</p>
+          <header>
+            <h2><input type="text" v-model="o.name" @blur="checkName(o)"/> settings</h2>
+            <p>Distance Δ: {{ o.distance }}</p>
+            <p>Radius r: {{ o.radius }}</p>
+            <p>Satellites: {{ listSatellites(o) }}</p>
+          </header>
+          <label>
+            Δ
+            <input class="planet-distance" type="range" min="50" max="1000" v-model="o.distance" />
+          </label>
+          <label>
+            r
+            <input class="planet-radius" type="range" min="1" max="125" v-model="o.radius" />
+          </label>
         </div>
       </div>
       <button>add object</button>
@@ -87,24 +97,24 @@ const star = reactive({
 const starCX = computed(() => -1 * star.radius * steepCurve(star.radius, 50, 0.955))
 
 const objects = ref([
-  { type: 'planet', name: 'Mercury', radius: 1, distance: 100, moons: [], rings: [] },
-  { type: 'planet', name: 'Venus', radius: 4, distance: 120, moons: [], rings: [] },
-  { type: 'planet', name: 'Terra', radius: 4, distance: 140, moons: [
+  { type: 'planet', name: 'Mercury', radius: 1, distance: 100, satellites: [], rings: [] },
+  { type: 'planet', name: 'Venus', radius: 4, distance: 120, satellites: [], rings: [] },
+  { type: 'planet', name: 'Terra', radius: 4, distance: 140, satellites: [
     { name: 'ISS', type: 'station' },
     { name: 'Luna', radius: 2 },
   ], rings: 0 },
-  { type: 'planet', name: 'Mars', radius: 2, distance: 160, moons: [
+  { type: 'planet', name: 'Mars', radius: 2, distance: 160, satellites: [
     { name: 'MTO', type: 'station' },
     { name: 'Phobos', radius: 1 },
     { name: 'Daimos', radius: 1 },
   ], rings: 0 },
-  { type: 'planet', name: 'Jupiter', radius: 40, distance: 260, moons: [
+  { type: 'planet', name: 'Jupiter', radius: 40, distance: 260, satellites: [
     { name: 'Io', radius: 2 },
     { name: 'Europa', radius: 2 },
     { name: 'Ganymede', radius: 4 },
     { name: 'Callisto', radius: 3 },
   ], rings: 1 },
-  { type: 'planet', name: 'Saturn', radius: 36, distance: 410, moons: [
+  { type: 'planet', name: 'Saturn', radius: 36, distance: 410, satellites: [
     { name: 'Mimas', radius: 1 },
     { name: 'Enceladus', radius: 1 },
     { name: 'Tethys', radius: 1 },
@@ -113,14 +123,14 @@ const objects = ref([
     { name: 'Titan', radius: 3 },
     { name: 'Iapetus', radius: 1 },
   ], rings: 5 },
-  { type: 'planet', name: 'Uranus', radius: 16, distance: 680, moons: [
+  { type: 'planet', name: 'Uranus', radius: 16, distance: 680, satellites: [
     { name: 'Miranda', radius: 1 },
     { name: 'Ariel', radius: 1 },
     { name: 'Umbriel', radius: 1 },
     { name: 'Titania', radius: 1 },
     { name: 'Oberon', radius: 1 },
   ], rings: 2 },
-  { type: 'planet', name: 'Neptune', radius: 15, distance: 950, moons: [
+  { type: 'planet', name: 'Neptune', radius: 15, distance: 950, satellites: [
     { name: 'Triton', radius: 1 },
   ], rings: [] },
 ])
@@ -129,6 +139,12 @@ const selectedObject = ref(null)
 
 function toggleObject (obj) {
   selectedObject.value = selectedObject.value === obj ? null : obj
+}
+function checkName (obj) {
+  if (!obj.name.trim().length) {
+    const index = objects.value.indexOf(obj)
+    obj.name = `${star.designation}-${index}`
+  }
 }
 
 const labelFonts = ['douar', 'lack', 'xolonium']
@@ -141,14 +157,14 @@ function setTheme () {
   document.body.className = `theme-${selectedTheme.value}`
 }
 
-function listMoons (obj) {
-  if (!obj.moons || !obj.moons.length) return 'none'
-  return obj.moons.reduce((acc, moon) => {
-    let s = moon.name
-    if (moon.type) s += ` (${moon.type})`
+function listSatellites (obj) {
+  if (!obj.satellites || !obj.satellites.length) return 'none'
+  return obj.satellites.reduce((acc, satellite) => {
+    let s = satellite.name
+    if (satellite.type) s += ` (${satellite.type})`
     acc.push(s)
     return acc
-  }, []).join('; ')
+  }, []).join(', ')
 }
 setTheme()
 </script>
