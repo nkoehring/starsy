@@ -51,6 +51,8 @@ const starCX = computed(() => {
 const draggedObject = ref(null)
 const draggingDelta = ref(0)
 let dragStart = 0
+// pixelFactor is used to transform screen pixels to SVG units
+let pixelFactor = 1.0
 
 // TODO: when releasing the pointer outside of the dragged element, this
 //       function is called but somehow doesn't remove the event listener?
@@ -70,15 +72,21 @@ function stopDragging (event) {
 }
 
 function updateDelta (event) {
-  console.log('updateDelta', event.clientX, dragStart)
-  draggingDelta.value = event.clientX - dragStart
+  draggingDelta.value = Math.round((event.clientX - dragStart) * pixelFactor)
 }
 
 function startDragging (event, object) {
   console.debug('start draggin', object.name)
+
   emit('select', object)
+
+  // we can savely assume that the windows width is not changing while dragging
+  pixelFactor = 1000 / document.body.offsetWidth
   draggedObject.value = object
   dragStart = event.clientX
+
+  // both window and element listeners are necessary to avoid
+  // issues when releasing the cursor outside of the element
   window.addEventListener('pointermove', updateDelta)
   window.addEventListener('pointerup', stopDragging)
   event.target.addEventListener('pointerup', stopDragging)
