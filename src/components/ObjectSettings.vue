@@ -1,28 +1,47 @@
 <template>
-  <div class="object-settings">
-    <header>
-      <h2><input type="text" v-model="name" @blur="checkName"/></h2>
-      <p>
+  <div id="object-settings">
+    <section class="main">
+      <div>
+        <input type="text" class="big"
+          :value="name"
+          @input="checkName($event.target.value)"
+        />
+      </div>
+      <div>
         Distance Δ:
-        <input type="number" min="50" max="1000" v-model="distance" />
-      </p>
-      <p>
+        <input type="number" min="50" max="1000"
+          :value="distance"
+          @input="update('distance', $event.target.value)"
+        />
+      </div>
+      <div>
         Radius r:
-        <input type="number" min="1" max="125" v-model="radius" />
-      </p>
-      <p>
+        <input type="number" min="1" max="125"
+          :value="radius"
+          @input="update('radius', $event.target.value)"
+        />
+      </div>
+      <div>
         Rings:
-        <input type="number" min="0" max="15" v-model="rings" />
-      </p>
-    </header>
-    <div class="satellite-list">
+        <input type="number" min="0" max="15"
+          :value="rings"
+          @input="update('rings', $event.target.value)"
+        />
+      </div>
+      <button class="close" title="close" @click="$emit('close')">&nbsp;</button>
+    </section>
+    <section class="satellite-list">
       Satellites:
-      <button class="satellite" v-for="satellite in satellites">
+      <button class="cta" v-for="satellite in satellites">
         {{ satellite.name }}
         <template v-if="satellite.type">({{ satellite.type }})</template>
       </button>
       <button class="add">&nbsp;</button>
-    </div>
+    </section>
+    <section class="additional-options">
+      Other options:
+      <button class="cta danger" @click="$emit('delete')">REMOVE OBJECT</button>
+    </section>
   </div>
 </template>
 
@@ -30,20 +49,24 @@
 import { ref, computed } from 'vue'
 
 const props = defineProps({
-  object: Object,
+  distance: Number,
+  name: String,
+  type: String,
+  radius: Number,
+  rings: Number,
+  satellites: Array,
+  autoName: String, // auto generated name, like Sol-3
 })
 const emit = defineEmits([
-  'update:object',
+  'update:distance',
+  'update:name',
+  'update:type',
+  'update:radius',
+  'update:rings',
+  'update:satellites',
+  'delete',
+  'close',
 ])
-
-const tipsShown = ref(true)
-
-const distance = ref(props.object.distance)
-const name = ref(props.object.name)
-const type = ref(props.object.type)
-const radius = ref(props.object.radius)
-const rings = ref(props.object.rings)
-const satellites = ref(props.object.satellites)
 
 const satellitesList = computed(() => {
   if (!satellites.value || !satellites.value.length) return 'none'
@@ -55,8 +78,16 @@ const satellitesList = computed(() => {
   }, []).join(', ')
 })
 
+const numberTargets = ['distance', 'radius', 'rings']
+
 function update (target, value) {
-  if (target === 'radius') value = parseInt(value)
+  console.debug('updating', target, 'with', value)
+  if (numberTargets.indexOf(target) >= 0) value = parseInt(value)
   emit(`update:${target}`, value)
+}
+
+function checkName (name) {
+  if (!name.trim().length) name = props.autoName
+  update('name', name)
 }
 </script>

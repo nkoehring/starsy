@@ -7,7 +7,17 @@
   <SystemDiagram v-bind="{ star, objects }" />
 
   <section id="settings">
-    <ObjectSettings v-model:object="selectedObject" v-if="selectedObject" />
+    <ObjectSettings v-if="selectedObject"
+      v-model:name="selectedObject.name"
+      v-model:distance="selectedObject.distance"
+      v-model:type="selectedObject.type"
+      v-model:radius="selectedObject.radius"
+      v-model:rings="selectedObject.rings"
+      v-model:satellites="selectedObject.satellites"
+      :auto-name="autoName(selectedObject)"
+      @delete="deleteObject"
+      @close="editObject(null)"
+    />
     <Tips>
       <li>Edit planets by clicking directly inside the graphic or in the table below.</li>
       <li>Drag planets around to change their distance.</li>
@@ -16,7 +26,7 @@
       <li>You can also drag satellite buttons around to reorder them.</li>
     </Tips>
     <SystemSettings v-model:designation="star.designation" v-model:radius="star.radius" />
-    <ObjectList v-bind="{ objects, editObject, deleteObject }" />
+    <ObjectList v-bind="{ objects, deletedObject, editObject, deleteObject, restoreDeleted }" />
   </section>
 
 </template>
@@ -41,13 +51,38 @@ const labelFonts = ['xolonium', 'douar', 'lack']
 const themes = ['default', 'retro', 'inverse', 'paper']
 
 const selectedObject = ref(null)
+const deletedObject = ref(null) // { index: Number, object: Object }
 
-function editObject (obj) {
-  selectedObject.value = obj
+function editObject (object) {
+  selectedObject.value = object
 }
 
-function deleteObject (obj) {
-  console.log('delete object not yet implemented')
+function deleteObject (object) {
+  if (deletedObject.value) {
+    const lost = deletedObject.value.object.name
+    const confirmed = confirm(`
+      Attention! Only the LAST deleted object can be restored.
+      ${lost} will be lost forever! Proceed anyway?`
+    )
+    if (!confirmed) return
+  }
+
+  if (!object) object = selectedObject.value
+  const index = objects.value.indexOf(object)
+
+  console.debug('deleting object at index', index)
+
+  if (index >= 0) objects.value.splice(index, 1)
+  if (object === selectedObject.value) selectedObject.value = null
+
+  deletedObject.value = { index, object }
+}
+
+function restoreDeleted () {
+  const { index, object } = deletedObject.value
+  console.debug('restoring deleted object', index)
+  objects.value.splice(index, 0, object)
+  deletedObject.value = null
 }
 
 function autoName (obj) {
