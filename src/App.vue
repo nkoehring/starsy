@@ -4,7 +4,7 @@
     @select:font="setFont($event)"
     @select:theme="setTheme($event)"
   />
-  <SystemDiagram v-bind="{ star, objects }" />
+  <SystemDiagram v-bind="{ star, objects, selectedObject }" @select="selectObject" />
 
   <section id="settings">
     <ObjectSettings v-if="selectedObject"
@@ -60,6 +60,9 @@ function editObject (object) {
     document.documentElement.scrollTop = 0
     document.body.scrollTop = 0
   }
+  selectedObject.value = object
+}
+function selectObject (object) {
   selectedObject.value = object
 }
 

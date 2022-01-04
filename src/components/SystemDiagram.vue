@@ -3,7 +3,13 @@
     <line id="axis" x1="0" y1="150" x2="1000" y2="150" />
     <circle id="star" :r="star.radius" :cx="starCX" cy="150" />
 
-    <g class="object" :id="o.name" v-for="o in objects">
+    <g v-for="o in objects"
+      class="object"
+      :class="{ selected: o === selectedObject }"
+      :id="o.name"
+      @mousedown.left="startDragging(o)"
+      @mouseup.left="stopDragging"
+    >
       <g class="rings" v-for="i in o.rings">
         <circle :r="o.radius - 5 + 2*i" :cx="o.distance" cy="150" />
       </g>
@@ -25,16 +31,30 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 import steepCurve from '../steep-curve'
 
 const props = defineProps({
   star: Object,
   objects: Array,
+  selectedObject: Object,
 })
+
+const emit = defineEmits([ 'select' ])
 
 const starCX = computed(() => {
   const r = props.star.radius
   return -1 * r * steepCurve(r, 50, 0.955)
 })
+
+const draggedObject = ref(null)
+
+function startDragging (object) {
+  emit('select', object)
+  draggedObject.value = object
+}
+function stopDragging () {
+  draggedObject.value = null
+}
+
 </script>

@@ -128,8 +128,9 @@ text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: le
 .object > line { stroke-width: .5; }
 .satellite { text-anchor: start; font-size: .7em; }
 .rings { stroke: var(--fg-graphic); fill: none; transform: skew(-45deg); transform-origin: 50%; }
-.object:hover { fill: var(--hl-graphic); }
-.object:hover > line, .object:hover .rings { stroke: var(--hl-graphic); }
+.object:hover, .object.selected { fill: var(--hl-graphic); }
+.object:hover > line, .object:hover .rings,
+.object.selected > line, .object.selected .rings { stroke: var(--hl-graphic); }
 
 h1 {
   font-family: xolonium;
