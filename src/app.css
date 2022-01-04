@@ -43,7 +43,7 @@ html,body {
   color: var(--fg-app);
 }
 
-input[type="text"] {
+input[type="text"], input[type="number"] {
   background: transparent;
   border: 1px solid var(--fg-app);
   color: var(--fg-app);
@@ -52,6 +52,34 @@ input[type="text"]:focus {
   outline: 2px solid var(--fg-app);
   border: 1px solid #FFF5;
 }
+
+button {
+  cursor: pointer;
+}
+button.settings, button.delete, button.add, button.less {
+  width: 48px;
+  height: 48px;
+  border: 4px solid var(--bg-app);
+  background-color: var(--bg-app);
+  background-size: 32px;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+}
+button.settings { background-image: url(./assets/change.png); }
+button.delete { background-image: url(./assets/delete.png); }
+button.add { background-image: url(./assets/add.png); }
+button.less { background-image: url(./assets/less.png); }
+
+.tip {
+  width: calc(100% - 4em);
+  margin-left: -1em;
+  padding: 1em 2em;
+  border: 2px solid #8888;
+  border-left-width: 1em;
+}
+.tip > header { font-weight: bold; }
+.tip > li { margin-top: .75em; }
 
 body.theme-retro {
   --bg-app: #4B4839;
@@ -84,9 +112,9 @@ body.theme-paper {
   --fg-settings: #000;
 }
 
-.title-douar { font-family: 'douar'; }
-.title-lack { font-family: 'lack'; }
-.title-xolonium { font-family: 'xolonium'; }
+body.title-douar { --title-font: 'douar'; }
+body.title-lack { --title-font: 'lack'; }
+body.title-xolonium { --title-font: 'xolonium'; }
 
 .menu-item {
   padding: 1em;
@@ -121,7 +149,7 @@ svg { background: var(--bg-graphic); }
 line { stroke: var(--fg-graphic); }
 text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: left top; transform-box: fill-box; }
 #axis { stroke-width: 1; }
-#designation { fill: var(--fg-graphic); text-anchor: end; }
+#designation { fill: var(--fg-graphic); text-anchor: end; font-family: var(--title-font); }
 #star { fill: var(--fill-star); }
 .object { fill: var(--fg-graphic); text-anchor: middle; font-size: .6em; cursor: pointer; }
 .object > line { stroke-width: .5; }
@@ -149,20 +177,22 @@ h1 {
 }
 
 #settings {
+  max-width: 700px;
+  margin: auto;
   padding: 1em 2em;
 }
-#settings > header, .object-settings > header {
+#settings > header {
   display: flex;
+  flex-flow: column nowrap;
   align-items: center;
 }
 #settings > header > h1 {
   min-width: 330px;
 }
 
-#system-settings, #object-list {
+#system-settings {
   display: flex;
   align-items: center;
-  width: calc(100vw - 4em);
   padding: 0;
   list-style: none;
 }
@@ -174,20 +204,38 @@ h1 {
   margin: 0 1em;
 }
 #system-settings button { height: 2em; }
-#system-settings input { width: 220px; }
+#system-settings input { width: 200px; }
 #system-settings input[type="text"] {
   margin-left: 1em;
   padding: .5em 1em .4em;
 }
 
-.object-settings > header > p {
-  margin-left: 2em;
-  padding-top: .37em;
+#object-list {
+  display: block;
+  width: 100%;
+  margin: 3em auto;
+}
+#object-list th {
+  padding: .25em 1em;
+  border-bottom: 2px solid var(--fg-app);
+}
+#object-list .cell {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: .25em 1em;
 }
 
-.object-settings > label {
+.object-settings {
+  margin-bottom: 5em;
+}
+.object-settings > header {
   display: flex;
   align-items: center;
+  margin-bottom: 1em;
+}
+.object-settings > header > p {
+  margin-left: 2em;
 }
 .object-settings > header input[type="text"] {
   width: 7em;
@@ -195,9 +243,27 @@ h1 {
   font-size: 1em;
   font-weight: bold;
 }
-.object-settings > label > span {
-  width: 2em;
+.object-settings input[type="range"] { width: 100%; }
+.object-settings input[type="number"] {
+  width: 4em;
+  padding: .2em 0;
+  text-align: center;
 }
-.object-settings .planet-distance { width: 100%; }
-.object-settings .planet-radius { width: 100%; }
-.object-settings .planet-rings { width: 3em; padding: .2em; }
+.object-settings .satellite-list {
+
+}
+.object-settings .satellite {
+  vertical-align: middle;
+  margin: 0 .2em;
+  padding: 2px .5em;
+  font-size: 1.2em;
+  background: var(--bg-app);
+  color: var(--fg-app);
+  border: 3px solid var(--fg-app);
+  border-radius: 8px;
+  transition: border-color .2s ease-out;
+}
+.object-settings .satellite:hover {
+  outline: 1px solid var(--fg-app);
+  border-color: transparent;
+}

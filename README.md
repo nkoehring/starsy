@@ -15,3 +15,4 @@ Title fonts are from [fontlibrary.org](https://fontlibrary.org/):
 
 Fonts are optimized with the [FontSquirrel webfont generator](https://www.fontsquirrel.com/tools/webfont-generator).
 
+Icons made by [Reussy](https://www.flaticon.com/authors/reussy) from [Flaticon](https://www.flaticon.com/).
