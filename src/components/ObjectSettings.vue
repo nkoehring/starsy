@@ -9,21 +9,21 @@
       </div>
       <div>
         Distance Δ:
-        <input type="number" min="50" max="1000"
+        <input type="number" :min="MIN_DISTANCE_PLANET" :max="MAX_DISTANCE_PLANET"
           :value="distance"
           @input="update('distance', $event.target.value)"
         />
       </div>
       <div>
         Radius r:
-        <input type="number" min="1" max="125"
+        <input type="number" :min="MIN_SIZE_PLANET" :max="MAX_SIZE_PLANET"
           :value="radius"
           @input="update('radius', $event.target.value)"
         />
       </div>
       <div>
         Rings:
-        <input type="number" min="0" max="15"
+        <input type="number" :min="MIN_AMOUNT_RINGS" :max="MAX_AMOUNT_RINGS"
           :value="rings"
           @input="update('rings', $event.target.value)"
         />
@@ -47,6 +47,16 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import {
+  MIN_SIZE_STAR,
+  MAX_SIZE_STAR,
+  MIN_SIZE_PLANET,
+  MAX_SIZE_PLANET,
+  MIN_DISTANCE_PLANET,
+  MAX_DISTANCE_PLANET,
+  MIN_AMOUNT_RINGS,
+  MAX_AMOUNT_RINGS,
+} from '../constants'
 
 const props = defineProps({
   distance: Number,

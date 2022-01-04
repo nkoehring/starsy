@@ -4,11 +4,19 @@
     <menu id="system-settings">
       <label>
         Name
-        <input type="text" :value="designation" @input="update('designation', $event.target.value)" />
+        <input type="text"
+          :value="designation"
+          @input="update('designation', $event.target.value)"
+        />
       </label>
       <label>
         Star Size
-        <input type="range" min="50" max="1500" :value="radius" @input="update('radius', $event.target.value)" />
+        <input type="range"
+          :min="MIN_SIZE_STAR"
+          :max="MAX_SIZE_STAR"
+          :value="radius"
+          @input="update('radius', $event.target.value)"
+        />
         ({{ radius }})
       </label>
     </menu>
@@ -17,6 +25,10 @@
 
 <script setup>
 import { ref } from 'vue'
+import {
+  MIN_SIZE_STAR,
+  MAX_SIZE_STAR,
+} from '../constants'
 
 const props = defineProps({
   designation: String,

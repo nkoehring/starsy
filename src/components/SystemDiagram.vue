@@ -9,7 +9,7 @@
       :id="o.name"
       :style="{ transform: `translateX(${o === draggedObject ? draggingDelta : 0}px)` }"
       @pointerdown.left="startDragging($event, o)"
-      @pointerleft="stopDragging"
+      @wheel="resizeObject"
     >
       <g class="rings" v-for="i in o.rings">
         <circle :r="o.radius - 5 + 2*i" :cx="o.distance" cy="150" />
@@ -34,6 +34,12 @@
 <script setup>
 import { ref, computed } from 'vue'
 import steepCurve from '../steep-curve'
+import {
+  MIN_SIZE_PLANET,
+  MAX_SIZE_PLANET,
+  MIN_DISTANCE_PLANET,
+  MAX_DISTANCE_PLANET,
+} from '../constants'
 
 const props = defineProps({
   star: Object,
@@ -62,8 +68,12 @@ function stopDragging (event) {
   event.target.removeEventListener('pointerup', stopDragging)
   console.debug('stop draggin', draggedObject.value.name)
 
-  const newDistance = draggedObject.value.distance + draggingDelta.value
-  emit('update', { distance: newDistance })
+  let distance = draggedObject.value.distance + draggingDelta.value
+
+  if (distance < MIN_DISTANCE_PLANET) distance = MIN_DISTANCE_PLANET
+  if (distance > MAX_DISTANCE_PLANET) distance = MAX_DISTANCE_PLANET
+
+  emit('update', { distance })
 
   dragStart = 0
   draggingDelta.value = 0
@@ -90,5 +100,19 @@ function startDragging (event, object) {
   window.addEventListener('pointermove', updateDelta)
   window.addEventListener('pointerup', stopDragging)
   event.target.addEventListener('pointerup', stopDragging)
+}
+
+function resizeObject (event) {
+  if (!props.selectedObject) return
+
+  event.preventDefault()
+
+  let radius = props.selectedObject.radius
+  radius = Math.round(radius + event.deltaY * -0.01)
+
+  if (radius < MIN_SIZE_PLANET) radius = MIN_SIZE_PLANET
+  if (radius > MAX_SIZE_PLANET) radius = MAX_SIZE_PLANET
+
+  emit('update', { radius })
 }
 </script>
