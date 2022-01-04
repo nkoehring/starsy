@@ -4,7 +4,10 @@
     @select:font="setFont($event)"
     @select:theme="setTheme($event)"
   />
-  <SystemDiagram v-bind="{ star, objects, selectedObject }" @select="selectObject" />
+  <SystemDiagram v-bind="{ star, objects, selectedObject }"
+    @select="selectObject"
+    @update="updateSelectedObject"
+  />
 
   <section id="settings">
     <ObjectSettings v-if="selectedObject"
@@ -48,7 +51,7 @@ const star = reactive({
   radius: 400,
 })
 
-const objects = ref(exampleData)
+const objects = reactive(exampleData)
 const labelFonts = ['xolonium', 'douar', 'lack']
 const themes = ['default', 'retro', 'inverse', 'paper']
 
@@ -66,6 +69,13 @@ function selectObject (object) {
   selectedObject.value = object
 }
 
+function updateSelectedObject (payload) {
+  console.log('updating selected object', payload)
+  for (const key in payload) {
+    selectedObject.value[key] = payload[key]
+  }
+}
+
 function deleteObject (object) {
   if (deletedObject.value) {
     const lost = deletedObject.value.object.name
@@ -77,11 +87,11 @@ function deleteObject (object) {
   }
 
   if (!object) object = selectedObject.value
-  const index = objects.value.indexOf(object)
+  const index = objects.indexOf(object)
 
   console.debug('deleting object at index', index)
 
-  if (index >= 0) objects.value.splice(index, 1)
+  if (index >= 0) objects.splice(index, 1)
   if (object === selectedObject.value) selectedObject.value = null
 
   deletedObject.value = { index, object }
@@ -90,12 +100,12 @@ function deleteObject (object) {
 function restoreDeleted () {
   const { index, object } = deletedObject.value
   console.debug('restoring deleted object', index)
-  objects.value.splice(index, 0, object)
+  objects.splice(index, 0, object)
   deletedObject.value = null
 }
 
 function autoName (obj) {
-  const index = objects.value.indexOf(obj)
+  const index = objects.indexOf(obj)
   return `${star.designation}-${index}`
 }
 

@@ -124,7 +124,7 @@ text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: le
 #axis { stroke-width: 1; }
 #designation { fill: var(--fg-graphic); text-anchor: end; font-family: var(--title-font); }
 #star { fill: var(--fill-star); }
-.object { fill: var(--fg-graphic); text-anchor: middle; font-size: .6em; cursor: pointer; }
+.object { fill: var(--fg-graphic); text-anchor: middle; font-size: .6em; cursor: pointer; transform-box: fill-box; }
 .object > line { stroke-width: .5; }
 .satellite { text-anchor: start; font-size: .7em; }
 .rings { stroke: var(--fg-graphic); fill: none; transform: skew(-45deg); transform-origin: 50%; }

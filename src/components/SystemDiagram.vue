@@ -7,8 +7,9 @@
       class="object"
       :class="{ selected: o === selectedObject }"
       :id="o.name"
-      @mousedown.left="startDragging(o)"
-      @mouseup.left="stopDragging"
+      :style="{ transform: `translateX(${o === draggedObject ? draggingDelta : 0}px)` }"
+      @pointerdown.left="startDragging($event, o)"
+      @pointerleft="stopDragging"
     >
       <g class="rings" v-for="i in o.rings">
         <circle :r="o.radius - 5 + 2*i" :cx="o.distance" cy="150" />
@@ -40,7 +41,7 @@ const props = defineProps({
   selectedObject: Object,
 })
 
-const emit = defineEmits([ 'select' ])
+const emit = defineEmits([ 'select', 'update' ])
 
 const starCX = computed(() => {
   const r = props.star.radius
@@ -48,13 +49,38 @@ const starCX = computed(() => {
 })
 
 const draggedObject = ref(null)
+const draggingDelta = ref(0)
+let dragStart = 0
 
-function startDragging (object) {
+// TODO: when releasing the pointer outside of the dragged element, this
+//       function is called but somehow doesn't remove the event listener?
+function stopDragging (event) {
+  window.removeEventListener('pointermove', updateDelta)
+  window.removeEventListener('pointerup', stopDragging)
+  event.target.removeEventListener('pointerup', stopDragging)
+  console.debug('stop draggin', draggedObject.value.name)
+
+  const newDistance = draggedObject.value.distance + draggingDelta.value
+  emit('update', { distance: newDistance })
+
+  dragStart = 0
+  draggingDelta.value = 0
+  draggedObject.value = null
+  event.target.onmousemove = null
+}
+
+function updateDelta (event) {
+  console.log('updateDelta', event.clientX, dragStart)
+  draggingDelta.value = event.clientX - dragStart
+}
+
+function startDragging (event, object) {
+  console.debug('start draggin', object.name)
   emit('select', object)
   draggedObject.value = object
+  dragStart = event.clientX
+  window.addEventListener('pointermove', updateDelta)
+  window.addEventListener('pointerup', stopDragging)
+  event.target.addEventListener('pointerup', stopDragging)
 }
-function stopDragging () {
-  draggedObject.value = null
-}
-
 </script>
