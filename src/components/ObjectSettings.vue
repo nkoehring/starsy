@@ -30,14 +30,9 @@
       </div>
       <button class="close" title="close" @click="$emit('close')">&nbsp;</button>
     </section>
-    <section class="satellite-list">
-      Satellites:
-      <button class="cta" v-for="satellite in satellites">
-        {{ satellite.name }}
-        <template v-if="satellite.type">({{ satellite.type }})</template>
-      </button>
-      <button class="add">&nbsp;</button>
-    </section>
+
+    <SatelliteSettings :satellites="satellites" @update:satellites="update('satellites', $event)" />
+
     <section class="additional-options">
       Other options:
       <button class="cta danger" @click="$emit('delete')">REMOVE OBJECT</button>
@@ -47,6 +42,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import SatelliteSettings from './SatelliteSettings.vue'
+
 import {
   MIN_SIZE_STAR,
   MAX_SIZE_STAR,
@@ -77,16 +74,6 @@ const emit = defineEmits([
   'delete',
   'close',
 ])
-
-const satellitesList = computed(() => {
-  if (!satellites.value || !satellites.value.length) return 'none'
-  return satellites.value.reduce((acc, satellite) => {
-    let s = satellite.name
-    if (satellite.type) s += ` (${satellite.type})`
-    acc.push(s)
-    return acc
-  }, []).join(', ')
-})
 
 const numberTargets = ['distance', 'radius', 'rings']
 

@@ -10,6 +10,7 @@
       :style="{ transform: `translateX(${o === draggedObject ? draggingDelta : 0}px)` }"
       @pointerdown.left="startDragging($event, o)"
       @wheel="resizeObject"
+      @dragenter.prevent.stop="onDragEnter"
     >
       <g class="rings" v-for="i in o.rings">
         <circle :r="o.radius - 5 + 2*i" :cx="o.distance" cy="150" />
@@ -33,7 +34,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import steepCurve from '../steep-curve'
+import { steepCurve } from '../utils'
 import {
   MIN_SIZE_PLANET,
   MAX_SIZE_PLANET,
@@ -117,5 +118,9 @@ function resizeObject (event) {
   if (radius > MAX_SIZE_PLANET) radius = MAX_SIZE_PLANET
 
   emit('update', { radius })
+}
+
+function onDragEnter (event) {
+  console.log('SystemDiagram onDragEnter', event)
 }
 </script>

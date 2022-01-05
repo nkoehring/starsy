@@ -57,7 +57,7 @@ input[type="text"]:focus {
 button {
   cursor: pointer;
 }
-button.settings, button.delete, button.add, button.less, button.close {
+button.settings, button.delete, button.add, button.less, button.close, button.move {
   width: 48px;
   height: 48px;
   border: 4px solid var(--bg-app);
@@ -72,6 +72,7 @@ button.delete { background-image: url(./assets/delete.png); }
 button.add { background-image: url(./assets/add.png); }
 button.less { background-image: url(./assets/less.png); }
 button.close { background-image: url(./assets/close.png); }
+button.move { background-image: url(./assets/move.png); }
 
 .tip {
   width: calc(100% - 4em);
@@ -179,7 +180,8 @@ h1 {
 }
 #system-settings button { height: 2em; }
 #system-settings input { width: 200px; }
-#system-settings input[type="text"] {
+#system-settings input[type="text"],
+.satellite-name input[type="text"] {
   margin-left: 1em;
   padding: .5em 1em .4em;
 }
@@ -224,6 +226,83 @@ h1 {
 #object-settings section.satellite-list {
   margin: 2em 0;
 }
+
+.satellite-list-entry {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  padding: .5em 1em 0;
+}
+
+.satellite-list-entry.dragging {
+  opacity: .5;
+  z-index: 1;
+  pointer-events: none;
+}
+.satellite-list-entry.dragover {
+  padding-top: 3em;
+}
+.satellite-list-entry.dragunder {
+  padding-bottom: 3em;
+}
+.satellite-list-entry.dragover::before,
+.satellite-list-entry.dragunder::after {
+  content: " insert here ";
+  position: absolute;
+  width: 100%;
+  height: 2em;
+  margin-top: 6em;
+  border: 1px solid white;
+  text-align: center;
+  line-height: 2em;
+}
+.satellite-list-entry.dragover::before {
+  margin-top: -6em;
+}
+
+.satellite-list-entry > .options {
+  flex: 0 0 auto;
+  width: 75%;
+  text-align: right;
+}
+.satellite-list-entry > .options, .satellite-list-entry > .options > span {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+.satellite-list-entry .satellite-radius { opacity: .25; }
+.satellite-list-entry .satellite-radius.moon { opacity: 1; }
+
+.satellite-list-entry > .options > .actions {
+  margin-left: 2em;
+}
+
+.satellite-name > input[type="text"] {
+  width: 9em;
+}
+.satellite-radius > input[type="range"] {
+  width: 50% !important;
+  margin-left: .5em;
+}
+
+.drag-handle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.6em;
+  height: 100%;
+  font-size: 1.5em;
+  line-height: 1.7em;
+  text-align: center;
+  font-weight: bold;
+  background: var(--fg-app);
+  color: var(--bg-app);
+  cursor: pointer;
+}
+
 .cta {
   vertical-align: middle;
   margin: .2em;
