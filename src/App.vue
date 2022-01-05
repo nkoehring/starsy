@@ -70,7 +70,6 @@ function selectObject (object) {
 }
 
 function updateSelectedObject (payload) {
-  console.log('updating selected object', payload)
   for (const key in payload) {
     selectedObject.value[key] = payload[key]
   }

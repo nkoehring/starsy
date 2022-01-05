@@ -108,7 +108,10 @@ function resizeObject (event) {
   event.preventDefault()
 
   let radius = props.selectedObject.radius
-  radius = Math.round(radius + event.deltaY * -0.01)
+  radius = radius + event.deltaY * -0.01
+
+  if (event.deltaY > 0) radius = Math.floor(radius)
+  else radius = Math.ceil(radius)
 
   if (radius < MIN_SIZE_PLANET) radius = MIN_SIZE_PLANET
   if (radius > MAX_SIZE_PLANET) radius = MAX_SIZE_PLANET
