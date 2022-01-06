@@ -2,7 +2,9 @@
   <ul class="tip">
     <header>
       Tips:
-      <button @click="tipsShown = !tipsShown">{{ tipsShown ? 'close' : 'expand' }}</button>
+      <button @click="tipsShown = !tipsShown" v-if="collapsible">
+        {{ tipsShown ? 'collapse' : 'expand' }}
+      </button>
     </header>
     <template v-if="tipsShown">
       <slot />
@@ -12,5 +14,17 @@
 
 <script setup>
 import { ref } from 'vue'
-const tipsShown = ref(true)
+
+const props = defineProps({
+  collapsible: {
+    type: Boolean,
+    default: true,
+  },
+  hiddenByDefault: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const tipsShown = ref(!props.hiddenByDefault)
 </script>
