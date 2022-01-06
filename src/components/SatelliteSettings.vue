@@ -1,57 +1,55 @@
 <template>
   <section class="satellite-list">
     Satellites:
-    <transition-group name="draggable-items-list">
-      <div v-for="satellite,index in satellites"
-        class="satellite-list-entry"
-        :key="satellite.name"
-        :class="{
-          dragging: dragIndex === index,
-          dragunder: dropIndex === index && dragIndex < index,
-          dragover: dropIndex === index && dragIndex > index
-        }"
-        :style="dragIndex === index ? `transform: translateY(${dragDelta}px)` : ''"
-        @pointerenter="onDragEnter(index)"
-        @pointerleave="onDragLeave(index)"
-      >
-        <header>
-          <span class="satellite-name">
-            <input type="text"
-              :value="satellite.name"
-              @keydown.enter="update(index, 'name', $event.target)"
-              @blur="update(index, 'name', $event.target)"
-            />
-          </span>
-        </header>
-        <div class="options">
-          <span class="satellite-type">
-            <select
-              :value="satellite.type"
-              @change="update(index, 'type', $event.target)"
-            >
-              <option v-for="type in satelliteTypes">{{ type }}</option>
-            </select>
-          </span>
-          <span class="satellite-radius" :class="satellite.type">
-            Radius r:
-            <input type="range" :min="MIN_SIZE_MOON" :max="MAX_SIZE_MOON"
-              :disabled="satellite.type !== 'moon'"
-              :value="satellite.radius"
-              @input="update(index, 'radius', $event.target, true)"
-            />
-          </span>
-          <span class="actions">
-            <button class="move" title="drag to reorder"
-              @pointerdown="startDragging(index, $event)"
-              @pointerup="stopDragging"
-            >&nbsp;</button>
-            <button class="delete" title="delete satellite"
-              @click="deleteSatellite(index)"
-            >&nbsp;</button>
-          </span>
-        </div>
+    <div v-for="satellite,index in satellites"
+      class="satellite-list-entry"
+      :key="satellite.name"
+      :class="{
+        dragging: dragIndex === index,
+        dragunder: dropIndex === index && dragIndex < index,
+        dragover: dropIndex === index && dragIndex > index
+      }"
+      :style="dragIndex === index ? `transform: translateY(${dragDelta}px)` : ''"
+      @pointerenter="onDragEnter(index)"
+      @pointerleave="onDragLeave(index)"
+    >
+      <header>
+        <span class="satellite-name">
+          <input type="text"
+            :value="satellite.name"
+            @keydown.enter="update(index, 'name', $event.target)"
+            @blur="update(index, 'name', $event.target)"
+          />
+        </span>
+      </header>
+      <div class="options">
+        <span class="satellite-type">
+          <select
+            :value="satellite.type"
+            @change="update(index, 'type', $event.target)"
+          >
+            <option v-for="type in satelliteTypes">{{ type }}</option>
+          </select>
+        </span>
+        <span class="satellite-radius" :class="satellite.type">
+          Radius r:
+          <input type="range" :min="MIN_SIZE_MOON" :max="MAX_SIZE_MOON"
+            :disabled="satellite.type !== 'moon'"
+            :value="satellite.radius"
+            @input="update(index, 'radius', $event.target, true)"
+          />
+        </span>
+        <span class="actions">
+          <button class="move" title="drag to reorder"
+            @pointerdown="startDragging(index, $event)"
+            @pointerup="stopDragging"
+          >&nbsp;</button>
+          <button class="delete" title="delete satellite"
+            @click="deleteSatellite(index)"
+          >&nbsp;</button>
+        </span>
       </div>
-    </transition-group>
+    </div>
     <button class="add">&nbsp;</button>
   </section>
 </template>
