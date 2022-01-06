@@ -50,7 +50,7 @@
         </span>
       </div>
     </div>
-    <button class="add">&nbsp;</button>
+    <button class="add" @click="addSatellite">&nbsp;</button>
   </section>
 </template>
 
@@ -75,12 +75,21 @@ function isResizable (satellite) {
   return satellite.type === 'moon'
 }
 
-async function update (index, attr, target, isNumber) {
+function update (index, attr, target, isNumber) {
   const satellites = [...props.satellites]
   let value = target.value
   if (isNumber) value = parseInt(value)
 
   satellites[index][attr] = value
+  emit('update:satellites', satellites)
+}
+
+// TODO: auto focus new satellite name input
+function addSatellite () {
+  const satellites = [...props.satellites]
+  satellites.push({
+    name: 'unnamed', type: 'moon', radius: 1
+  })
   emit('update:satellites', satellites)
 }
 
