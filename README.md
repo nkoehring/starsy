@@ -2,6 +2,34 @@
 
 **Random Star System Generator**
 
+**Feel free to try it right away at [starsy.netlify.app](https://starsy.netlify.app)**
+
+
+## State of implementation
+
+The application is working but certain features are missing or unpolished:
+
+✅ Visualization of the Star System
+✅ Multiple themes
+✅ Manipulation of objects by value
+✅ Interactive value change (drag'n'drop / scroll)
+✅ Objects can be removed
+✅ Last removed object (planet) can be restored
+❌ add new objects
+❌ astroid belts
+❌ randomly generate star system
+❌ Export graphic via print or PDF
+❌ Export data
+
+Missing features above are all planned for 0.5 release version. Future versions might get some or all of the following features:
+
+⁉ More fonts and themes
+⁉ Add meta data to any object
+⁉ Export a single- or multi-page report / dossier / pamphlet
+⁉ More object types (stations orbiting the star, mega structures?)
+⁉ (faction?) Icons for planets / moons / stations
+⁉ ...possibly more to come, let me know about your ideas!
+
 ## Acknowledgements
 
 Original idea from [Tanner Stephens Star System Generator](https://tannerstephens.com/star-system-creator/) and a post from [/u/koboldstyle on reddit](https://www.reddit.com/r/SWN/comments/cp4bkq/easy_solar_system_map_creator/ewp61ca/).
