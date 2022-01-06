@@ -9,7 +9,7 @@
       :id="o.name"
       :style="{ transform: `translateX(${o === draggedObject ? draggingDelta : 0}px)` }"
       @pointerdown.left="startDragging($event, o)"
-      @wheel="resizeObject"
+      @wheel.alt="resizeObject"
       @dragenter.prevent.stop="onDragEnter"
     >
       <g class="rings" v-for="i in o.rings">
