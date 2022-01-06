@@ -57,7 +57,7 @@ input[type="text"]:focus {
 button {
   cursor: pointer;
 }
-button.settings, button.delete, button.add, button.less, button.close, button.move {
+button.settings, button.delete, button.add, button.less, button.close, button.move, button.dice {
   width: 48px;
   height: 48px;
   border: 4px solid var(--bg-app);
@@ -73,6 +73,14 @@ button.add { background-image: url(./assets/add.png); }
 button.less { background-image: url(./assets/less.png); }
 button.close { background-image: url(./assets/close.png); }
 button.move { background-image: url(./assets/move.png); }
+button.dice { background-image: url(./assets/dice.png); }
+
+body.theme-paper button.settings { background-image: url(./assets/change_inverted.png); }
+body.theme-paper button.add { background-image: url(./assets/add_inverted.png); }
+body.theme-paper button.less { background-image: url(./assets/less_inverted.png); }
+body.theme-paper button.close { background-image: url(./assets/close_inverted.png); }
+body.theme-paper button.move { background-image: url(./assets/move_inverted.png); }
+body.theme-paper button.dice { background-image: url(./assets/dice_inverted.png); }
 
 button.small {
   width: 24px;
