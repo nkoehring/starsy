@@ -250,7 +250,7 @@ h1 {
 }
 .satellite-list-entry.dragover::before,
 .satellite-list-entry.dragunder::after {
-  content: " insert here ";
+  content: " — move here — ";
   position: absolute;
   width: 100%;
   height: 2em;

@@ -25,10 +25,8 @@
       <li>Edit planets by clicking directly inside the graphic or in the table below.</li>
       <li>Drag planets around to change their distance.</li>
       <li>Use the scrollwheel to change their size (click first to activate).</li>
-      <li>To change satellites, click their respective buttons in the planet dialog.</li>
-      <li>You can also drag satellite buttons around to reorder them.</li>
-      <li>The last removed object can be restored from the table.</li>
-      <li><strong>ONLY THE LAST</strong> removed object can be restored.</li>
+      <li>The last removed planet can be restored from the table.</li>
+      <li><strong>ONLY THE LAST</strong> removed planet can be restored.</li>
     </Tips>
     <SystemSettings v-model:designation="star.designation" v-model:radius="star.radius" />
     <ObjectList v-bind="{ objects, deletedObject, editObject, deleteObject, restoreDeleted }" />
