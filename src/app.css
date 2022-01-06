@@ -210,6 +210,9 @@ h1 {
   padding: .25em 1em;
   border-bottom: 2px solid var(--fg-app);
 }
+#object-list tr.selected {
+  font-weight: bold;
+}
 #object-list .cell {
   display: flex;
   justify-content: space-around;

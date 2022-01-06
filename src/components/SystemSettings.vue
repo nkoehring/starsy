@@ -4,20 +4,17 @@
     <menu id="system-settings">
       <label>
         Name
-        <input type="text"
-          :value="designation"
-          @input="update('designation', $event.target.value)"
-        />
+        <input type="text" v-model="star.designation" />
       </label>
       <label>
         Star Size
         <input type="range"
           :min="MIN_SIZE_STAR"
           :max="MAX_SIZE_STAR"
-          :value="radius"
-          @input="update('radius', $event.target.value)"
+          :value="star.radius"
+          @input="updateRadius($event.target.value)"
         />
-        ({{ radius }})
+        ({{ star.radius }})
       </label>
     </menu>
   </header>
@@ -25,22 +22,15 @@
 
 <script setup>
 import { ref } from 'vue'
+import useObjects from '../useObjects'
 import {
   MIN_SIZE_STAR,
   MAX_SIZE_STAR,
 } from '../constants'
 
-const props = defineProps({
-  designation: String,
-  radius: Number,
-})
-const emit = defineEmits([
-  'update:designation',
-  'update:radius',
-])
+const { star } = useObjects()
 
-function update (target, value) {
-  if (target === 'radius') value = parseInt(value)
-  emit(`update:${target}`, value)
+function updateRadius (radius) {
+  star.radius = parseInt(radius)
 }
 </script>

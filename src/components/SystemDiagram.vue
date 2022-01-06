@@ -34,26 +34,15 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { steepCurve } from '../utils'
-import {
-  MIN_SIZE_PLANET,
-  MAX_SIZE_PLANET,
-  MIN_DISTANCE_PLANET,
-  MAX_DISTANCE_PLANET,
-} from '../constants'
+import useObjects from '../useObjects'
 
-const props = defineProps({
-  star: Object,
-  objects: Array,
-  selectedObject: Object,
-})
-
-const emit = defineEmits([ 'select', 'update' ])
-
-const starCX = computed(() => {
-  const r = props.star.radius
-  return -1 * r * steepCurve(r, 50, 0.955)
-})
+const {
+  star,
+  starCX,
+  objects,
+  selectedObject,
+  updateSelectedObject,
+} = useObjects()
 
 const draggedObject = ref(null)
 const draggingDelta = ref(0)
@@ -69,12 +58,8 @@ function stopDragging (event) {
   event.target.removeEventListener('pointerup', stopDragging)
   console.debug('stop draggin', draggedObject.value.name)
 
-  let distance = draggedObject.value.distance + draggingDelta.value
-
-  if (distance < MIN_DISTANCE_PLANET) distance = MIN_DISTANCE_PLANET
-  if (distance > MAX_DISTANCE_PLANET) distance = MAX_DISTANCE_PLANET
-
-  emit('update', { distance })
+  const distance = draggedObject.value.distance + draggingDelta.value
+  updateSelectedObject({ distance })
 
   dragStart = 0
   draggingDelta.value = 0
@@ -88,8 +73,7 @@ function updateDelta (event) {
 
 function startDragging (event, object) {
   console.debug('start draggin', object.name)
-
-  emit('select', object)
+  selectedObject.value = object
 
   // we can savely assume that the windows width is not changing while dragging
   pixelFactor = 1000 / document.body.offsetWidth
@@ -104,23 +88,16 @@ function startDragging (event, object) {
 }
 
 function resizeObject (event) {
-  if (!props.selectedObject) return
+  if (!selectedObject.value) return
 
   event.preventDefault()
 
-  let radius = props.selectedObject.radius
+  let radius = selectedObject.value.radius
   radius = radius + event.deltaY * -0.01
 
   if (event.deltaY > 0) radius = Math.floor(radius)
   else radius = Math.ceil(radius)
 
-  if (radius < MIN_SIZE_PLANET) radius = MIN_SIZE_PLANET
-  if (radius > MAX_SIZE_PLANET) radius = MAX_SIZE_PLANET
-
-  emit('update', { radius })
-}
-
-function onDragEnter (event) {
-  console.log('SystemDiagram onDragEnter', event)
+  updateSelectedObject({ radius })
 }
 </script>
