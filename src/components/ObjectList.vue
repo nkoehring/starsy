@@ -20,6 +20,7 @@
         RESTORE DELETED OBJECT
       </button>
     </tr>
+    <button class="add" @click="addObject">&nbsp;</button>
   </table>
 </template>
 
@@ -29,6 +30,7 @@ import { computed } from 'vue'
 const props = defineProps({
   objects: Array,
   deletedObject: [Object, null],
+  addObject: Function,
   editObject: Function,
   deleteObject: Function,
   restoreDeleted: Function,

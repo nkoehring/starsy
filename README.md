@@ -15,9 +15,9 @@ The application is working but certain features are missing or unpolished:
 ✅ Interactive value change (drag'n'drop / scroll)
 ✅ Objects can be removed
 ✅ Last removed object (planet) can be restored
-❌ add new objects
-❌ astroid belts
+✅ add new planets and satellites
 ❌ randomly generate star system
+❌ astroid belts
 ❌ Export graphic via print or PDF
 ❌ Export data
 

@@ -29,7 +29,7 @@
       <li><strong>ONLY THE LAST</strong> removed planet can be restored.</li>
     </Tips>
     <SystemSettings v-model:designation="star.designation" v-model:radius="star.radius" />
-    <ObjectList v-bind="{ objects, deletedObject, editObject, deleteObject, restoreDeleted }" />
+    <ObjectList v-bind="{ objects, deletedObject, addObject, editObject, deleteObject, restoreDeleted }" />
   </section>
 
 </template>
@@ -43,6 +43,7 @@ import Tips from './components/Tips.vue'
 import SystemSettings from './components/SystemSettings.vue'
 import ObjectList from './components/ObjectList.vue'
 import ObjectSettings from './components/ObjectSettings.vue'
+import { MAX_DISTANCE_PLANET } from './constants'
 
 const star = reactive({
   designation: 'Sol',
@@ -55,6 +56,25 @@ const themes = ['default', 'retro', 'inverse', 'paper']
 
 const selectedObject = ref(null)
 const deletedObject = ref(null) // { index: Number, object: Object }
+
+function addObject() {
+  const amount = objects.length
+  let distance = 100
+
+  if (amount) {
+    const lastObject = objects[amount - 1]
+    distance = Math.min(MAX_DISTANCE_PLANET, lastObject.distance + 2*lastObject.radius + 10)
+  }
+
+  objects.push({
+    type: 'planet',
+    name: `${star.designation}-${amount + 1}`,
+    radius: 1,
+    distance,
+    satellites: [],
+    rings: 0,
+  })
+}
 
 function editObject (object) {
   if (object) {
