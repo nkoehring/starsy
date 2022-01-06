@@ -1,5 +1,10 @@
 <template>
   <div id="object-settings">
+    <Tips>
+      <li>You can use the scrollwheel together with the ALT key to resize a planet.</li>
+      <li>Drag the <button class="move small" /> button to rearrange satellites.</li>
+      <li>Only moons can have a size, station sizes are static.</li>
+    </Tips>
     <section class="main">
       <div>
         <input type="text" class="big"
@@ -42,6 +47,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import Tips from './Tips.vue'
 import SatelliteSettings from './SatelliteSettings.vue'
 
 import {

@@ -65,7 +65,7 @@ button.settings, button.delete, button.add, button.less, button.close, button.mo
   background-size: 32px;
   background-repeat: no-repeat;
   background-position: center;
-  cursor: pointer;
+  vertical-align: middle;
 }
 button.settings { background-image: url(./assets/change.png); }
 button.delete { background-image: url(./assets/delete.png); }
@@ -73,6 +73,12 @@ button.add { background-image: url(./assets/add.png); }
 button.less { background-image: url(./assets/less.png); }
 button.close { background-image: url(./assets/close.png); }
 button.move { background-image: url(./assets/move.png); }
+
+button.small {
+  width: 24px;
+  height: 24px;
+  background-size: 24px;
+}
 
 .tip {
   width: calc(100% - 4em);
