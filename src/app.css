@@ -340,7 +340,7 @@ h1 {
 }
 .danger {
   color: var(--fg-danger);
-  font-weight: bold;
+  border-color: var(--fg-danger);
 }
 .deleted-overlay {
   position: absolute;

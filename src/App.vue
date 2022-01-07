@@ -11,9 +11,9 @@
     <Tips>
       <li>Edit planets by clicking directly inside the graphic or in the table below.</li>
       <li>Drag planets around to change their distance.</li>
-      <li>Use the scrollwheel to change their size (click first to activate).</li>
       <li>The last removed planet can be restored from the table.</li>
       <li><strong>ONLY THE LAST</strong> removed planet can be restored.</li>
+      <li>Click on a planet to get more tips.</li>
     </Tips>
     <SystemSettings />
     <ObjectList />
