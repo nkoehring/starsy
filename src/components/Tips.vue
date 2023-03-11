@@ -1,5 +1,5 @@
 <template>
-  <ul class="tip">
+  <ul class="info">
     <header>
       Tips:
       <button @click="tipsShown = !tipsShown" v-if="collapsible">

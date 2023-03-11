@@ -10,8 +10,7 @@ import {
   MAX_AMOUNT_RINGS,
 } from './constants'
 import { steepCurve } from './utils'
-import exampleData from './example-data.js'
-
+import exampleData from './example-data/sol'
 
 const star = reactive(exampleData.star)
 const objects = reactive(exampleData.objects)
@@ -99,6 +98,18 @@ export default function useObjects () {
   }
 
   function randomizeObject (object) {
+    console.log('randomize', object)
+  }
+
+  function replaceCurrent (preset) {
+    const { star: newStar, objects: newObjects } = preset
+
+    Object.keys(star).forEach(key => {
+      star[key] = newStar[key]
+    })
+
+    objects.length = 0
+    newObjects.forEach(object => objects.push(object))
   }
 
   return {
@@ -113,5 +124,6 @@ export default function useObjects () {
     restoreDeleted,
     randomizeObject,
     autoName,
+    replaceCurrent,
   }
 }

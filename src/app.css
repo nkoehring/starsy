@@ -88,15 +88,15 @@ button.small {
   background-size: 24px;
 }
 
-.tip {
+.info {
   width: calc(100% - 4em);
   margin-left: -1em;
   padding: 1em 2em;
   border: 2px solid #8888;
   border-left-width: 1em;
 }
-.tip > header { font-weight: bold; }
-.tip > li { margin-top: .75em; }
+.info > header { font-weight: bold; }
+.info > li { margin-top: .75em; }
 
 body.theme-retro {
   --bg-app: #4B4839;
@@ -150,6 +150,10 @@ text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: le
 h1 {
   font-family: xolonium;
 }
+
+a { color: #AAF; }
+.theme-paper a { color: #33A; }
+
 #app > header {
   display: flex;
   justify-content: space-between;
@@ -352,5 +356,12 @@ h1 {
   width: 100%;
   height: 4.4em;
   color: var(--fg-app);
+  font-weight: bold;
+}
+.app-menu-button {
+  margin: 0 1em 0 0;
+  padding: .2em 1em;
+}
+.highlighted {
   font-weight: bold;
 }
