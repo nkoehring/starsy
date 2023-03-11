@@ -21,13 +21,15 @@ export default function useStarsyStorage(star, objects) {
   const currentName = ref('example')
 
   function loadPreset(name) {
-    return store.value[name]
+    const jsonClone = JSON.stringify(store.value[name])
+    const preset = JSON.parse(jsonClone)
+    return preset
   }
 
   function savePreset(star, objects) {
     const name = currentName.value
-    store.value[name] = { star, objects }
-    console.log('saved preset', name, store.value[name])
+    const jsonClone = JSON.stringify({ star, objects})
+    store.value[name] = JSON.parse(jsonClone)
   }
 
   function deletePreset(name) {
