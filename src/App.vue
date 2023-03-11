@@ -19,23 +19,7 @@
         </ul>
       </template>
       <template #load>
-        <p><i>(Careful! Loading will overwrite the current state!)</i></p>
-        <p>
-          <b>Local Storage</b>
-          <br />
-          <ul>
-            <li :key="name" v-for="{name, star, objects } in storageInfo">
-              {{ name }} ("{{ star }}", {{ objects }} objects)
-              <button @click="replaceCurrent(loadPreset(name))">load</button>
-              <button @click="deletePreset(name)" v-if="name !== 'example'">delete</button>
-            </li>
-          </ul>
-        </p>
-        <p>
-          <b>File System</b>
-          <br />
-          <input type="file" @change="loadJSONFile($event)" />
-        </p>
+        <PresetLoader />
       </template>
       <template #save>
         <p>
@@ -71,11 +55,12 @@ import Tips from './components/Tips.vue'
 import SystemSettings from './components/SystemSettings.vue'
 import ObjectList from './components/ObjectList.vue'
 import ObjectSettings from './components/ObjectSettings.vue'
+import PresetLoader from './components/PresetLoader.vue'
 
 import useObjects from './useObjects'
 import useStorage from './useStorage'
 
-const { star, objects, selectedObject, replaceCurrent } = useObjects()
+const { star, objects, selectedObject } = useObjects()
 const labelFonts = ['xolonium', 'douar', 'lack']
 const themes = ['default', 'retro', 'inverse', 'paper']
 
@@ -91,22 +76,6 @@ const fileBlob = computed(() => {
   const jsonFileData = JSON.stringify({ star, objects })
   return `data:text/json;charset=utf-8,${encodeURIComponent(jsonFileData)}`
 })
-
-function loadJSONFile (event) {
-  const file = event.target.files[0]
-  if (!file) return
-
-  const reader = new FileReader()
-  reader.onload = evt => {
-    try {
-      const preset = JSON.parse(evt.target.result)
-      replaceCurrent(preset)
-    } catch {
-      alert('Failed to read file. Are you sure, it is a valid Starsy JSON file?')
-    }
-  }
-  reader.readAsText(file)
-}
 
 function setTheme (theme) {
   const classes = document.body.className.split(' ')
