@@ -12,4 +12,3 @@ export const MAX_AMOUNT_RINGS = 15
 
 export const MIN_DISTANCE_PLANET = 32
 export const MAX_DISTANCE_PLANET = 999
-
