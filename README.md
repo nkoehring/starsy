@@ -10,25 +10,42 @@
 The application is working but certain features are missing or unpolished:
 
 ✅ Visualization of the Star System
+
 ✅ Multiple themes
+
 ✅ Manipulation of objects by value
+
 ✅ Interactive value change (drag'n'drop / scroll)
+
 ✅ Objects can be removed
+
 ✅ Last removed object (planet) can be restored
+
 ✅ add new planets and satellites
+
+✅ Export data / Import data
+
 ❌ randomly generate star system
+
 ❌ astroid belts
+
 ❌ Export graphic via print or PDF
-❌ Export data
+
 
 Missing features above are all planned for 0.5 release version. Future versions might get some or all of the following features:
 
 ⁉ More fonts and themes
+
 ⁉ Add meta data to any object
+
 ⁉ Export a single- or multi-page report / dossier / pamphlet
+
 ⁉ More object types (stations orbiting the star, mega structures?)
+
 ⁉ (faction?) Icons for planets / moons / stations
+
 ⁉ ...possibly more to come, let me know about your ideas!
+
 
 ## Acknowledgements
 
