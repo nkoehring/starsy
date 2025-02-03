@@ -16,7 +16,13 @@
         <circle :r="o.radius - 5 + 2*i" :cx="o.distance" cy="150" />
       </g>
 
-      <text :class="{ tilted: o.radius < 10 }" :x="o.distance" :y="140 - o.radius">{{ o.name }}</text>
+      <text
+        :transform="o.radius < 10 ? `rotate(-45, ${o.distance}, ${125 - o.radius})` : ''"
+        :x="o.distance"
+        :y="140 - o.radius"
+      >
+        {{ o.name }}
+      </text>
       <circle v-if="o.type === 'planet'" :r="o.radius" :cx="o.distance" cy="150" />
       <line v-if="o.satellites.length" :x1="o.distance" y1="150" :x2="o.distance" :y2="150 + o.radius + 10*o.satellites.length" />
 

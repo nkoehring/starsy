@@ -135,7 +135,6 @@ body.title-xolonium { --title-font: 'xolonium'; }
 
 svg { background: var(--bg-graphic); }
 line { stroke: var(--fg-graphic); }
-text.tilted { transform: rotate(-45deg) translate(0, 100%); transform-origin: left top; transform-box: fill-box; }
 #axis { stroke-width: 1; }
 #designation { fill: var(--fg-graphic); text-anchor: end; font-family: var(--title-font); }
 #star { fill: var(--fill-star); }

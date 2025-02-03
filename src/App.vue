@@ -24,7 +24,9 @@
       <template #save>
         <PresetSaver />
       </template>
-      <template #x></template>
+      <template #x>
+        <!-- empty template to "close" the menu -->
+      </template>
     </AppMenu>
     <SystemSettings />
     <ObjectList />
