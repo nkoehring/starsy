@@ -1,8 +1,9 @@
 <template>
-  <p><i>(Careful! Loading will overwrite the current state!)</i></p>
-  <p>
-    <b>Local Storage</b>
-    <br />
+  <div>
+    <i>(Careful! Loading will overwrite the current state!)</i>
+  </div>
+  <div>
+    <h2>Local Storage</h2>
     <ul>
       <li :key="name" v-for="{ name, star, objects } in storageInfo">
         {{ name }} ("{{ star }}", {{ objects }} objects)
@@ -10,12 +11,11 @@
         <button @click="deletePreset(name)" v-if="name !== 'example'">delete</button>
       </li>
     </ul>
-  </p>
-  <p>
-    <b>File System</b>
-    <br />
+  </div>
+  <div>
+    <h2>File System</h2>
     <input type="file" @change="loadJSONFile($event)" />
-  </p>
+  </div>
 </template>
 
 <script setup>
@@ -47,3 +47,13 @@ function loadJSONFile (event) {
   reader.readAsText(file)
 }
 </script>
+
+<style scoped>
+div {
+  margin: 1em 0;
+}
+h2 {
+  font-size: 1.2em;
+  margin: 2em 0 1em 0;
+}
+</style>

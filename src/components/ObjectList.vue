@@ -1,27 +1,35 @@
 <template>
   <table id="object-list">
-    <tr>
-      <th scope="col" v-for="col in columns">{{ col }}</th>
-      <th scope="col">actions</th>
-    </tr>
-    <tr v-for="o,i in objectList" :class="{ selected: o === selectedObject }">
-      <td v-for="value in values">
-        <div class="cell">{{ o[value] }}</div>
-      </td>
-      <td><div class="cell">{{ o.satellites.length }}</div></td>
-      <td><div class="cell">
-        <button class="settings" title="Configure Object" @click="editObject(o)">&nbsp;</button>
-        <button class="dice" title="Randomize Object Values" @click="randomizeObject(o)">&nbsp;</button>
-        <button class="delete" title="Delete Object" @click="deleteObject(o)">&nbsp;</button>
-      </div></td>
-      <button v-if="i === deletedObject?.index"
-        class="deleted-overlay"
-        @click="restoreDeleted"
-      >
-        RESTORE DELETED OBJECT
-      </button>
-    </tr>
-    <button class="add" title="Add New Object" @click="addObject">&nbsp;</button>
+    <thead>
+      <tr>
+        <th scope="col" v-for="col in columns">{{ col }}</th>
+        <th scope="col">actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="o,i in objectList" :class="{ selected: o === selectedObject }">
+        <td v-for="value in values">
+          <div class="cell">{{ o[value] }}</div>
+        </td>
+        <td><div class="cell">{{ o.satellites.length }}</div></td>
+        <td><div class="cell">
+          <button class="settings" title="Configure Object" @click="editObject(o)">&nbsp;</button>
+          <button class="dice" title="Randomize Object Values" @click="randomizeObject(o)">&nbsp;</button>
+          <button class="delete" title="Delete Object" @click="deleteObject(o)">&nbsp;</button>
+        </div></td>
+        <button v-if="i === deletedObject?.index"
+          class="deleted-overlay"
+          @click="restoreDeleted"
+        >
+          RESTORE DELETED OBJECT
+        </button>
+      </tr>
+      <tr>
+        <td>
+          <button class="add" title="Add New Object" @click="addObject">&nbsp;</button>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>
 
