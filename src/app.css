@@ -167,6 +167,10 @@ a { color: #AAF; }
 #app > header label {
   margin: 0 0 0 1em;
 }
+#app > footer {
+  margin: 0 1em .5em 0;
+  text-align: right;
+}
 .headline {
   display: flex;
   align-items: center;

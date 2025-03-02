@@ -84,7 +84,7 @@ setFont(labelFonts[0])
   <footer>
     An experiment by
     <a target="_blank" rel="noopener" href="https://koehr.ing">koehr</a> |
-    © 2023 - today |
+    © 2022 - today |
     <a target="_blank" rel="noopener" href="https://github.com/nkoehring/starsy">open source</a>
   </footer>
 </template>
