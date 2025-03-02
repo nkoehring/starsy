@@ -1,3 +1,37 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import useObjects from '../useObjects'
+import type { Planet } from '../types'
+
+const {
+  primaryBodies,
+  selectedObject,
+  deletedObject,
+  addObject,
+  deleteObject,
+  restoreDeleted,
+  randomizeObject,
+} = useObjects()
+
+const columns = ['Δ', 'Label', 'Type', 'Radius', 'Rings', 'Satellites'] as const
+const values = ['distance', 'label', 'type', 'radius', 'rings'] as Array<keyof Planet>
+
+const objectList = computed(() => {
+  if (!deletedObject.value) return primaryBodies
+
+  const { index, object } = deletedObject.value
+  const bodies = [ ...primaryBodies ]
+  bodies.splice(index, 0, object)
+  return bodies
+})
+
+function editObject(object: Planet) {
+  selectedObject.value = object
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+</script>
+
 <template>
   <table id="object-list">
     <thead>
@@ -13,9 +47,9 @@
         </td>
         <td><div class="cell">{{ o.satellites.length }}</div></td>
         <td><div class="cell">
-          <button class="settings" title="Configure Object" @click="editObject(o)">&nbsp;</button>
-          <button class="dice" title="Randomize Object Values" @click="randomizeObject(o)">&nbsp;</button>
-          <button class="delete" title="Delete Object" @click="deleteObject(o)">&nbsp;</button>
+          <button class="settings action" title="Configure Object" @click="editObject(o)">&nbsp;</button>
+          <button class="dice action" disabled title="Randomization is coming soon!" @click="randomizeObject(o)">&nbsp;</button>
+          <button class="delete action" title="Delete Object" @click="deleteObject(o)">&nbsp;</button>
         </div></td>
         <button v-if="i === deletedObject?.index"
           class="deleted-overlay"
@@ -26,44 +60,9 @@
       </tr>
       <tr>
         <td>
-          <button class="add" title="Add New Object" @click="addObject">&nbsp;</button>
+          <button class="add action" title="Add New Object" @click="addObject">&nbsp;</button>
         </td>
       </tr>
     </tbody>
   </table>
 </template>
-
-<script setup>
-import { computed } from 'vue'
-import useObjects from '../useObjects'
-
-const {
-  objects,
-  selectedObject,
-  deletedObject,
-  addObject,
-  deleteObject,
-  restoreDeleted,
-  randomizeObject,
-} = useObjects()
-
-const columns = ['Δ', 'Name', 'Type', 'Radius', 'Rings', 'Satellites']
-const values = ['distance', 'name', 'type', 'radius', 'rings']
-const objectList = computed(() => {
-  if (!deletedObject.value) return objects
-
-  const { index, object } = deletedObject.value
-  const objects_ = [ ...objects ]
-  objects_.splice(index, 0, object)
-  return objects_
-})
-
-function editObject (object) {
-  if (object) {
-    document.documentElement.scrollTop = 0
-    document.body.scrollTop = 0
-  }
-  selectedObject.value = object
-}
-
-</script>

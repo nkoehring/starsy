@@ -1,3 +1,17 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import useObjects from '../useObjects'
+import useStorage from '../useStorage'
+
+const { star, primaryBodies } = useObjects()
+const { savePreset, currentName } = useStorage(star, primaryBodies)
+
+const fileBlob = computed(() => {
+  const jsonFileData = JSON.stringify({ star, primaryBodies })
+  return `data:text/json;charset=utf-8,${encodeURIComponent(jsonFileData)}`
+})
+</script>
+
 <template>
   <div>
     <label>
@@ -7,24 +21,13 @@
   </div>
   <div>
     <h2>Local Storage</h2>
-    <button @click="savePreset(star, objects)">save as "{{ currentName }}"</button>
+    <button @click="savePreset(star, primaryBodies)">save as "{{ currentName }}"</button>
   </div>
   <div>
     <h2>File System</h2>
-    <a :href="fileBlob" :download="`${currentName}.json`">download as {{ currentName }}.json</a>
+    <a :href="fileBlob" :download="`${currentName}.starsy`">download as {{ currentName }}.starsy</a>
   </div>
 </template>
-
-<script setup>
-import useObjects from '../useObjects'
-import useStorage from '../useStorage'
-
-const { star, objects } = useObjects()
-const {
-  savePreset,
-  currentName,
-} = useStorage(star, objects)
-</script>
 
 <style scoped>
 div, label {

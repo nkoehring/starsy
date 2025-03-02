@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import useObjects from '../useObjects'
+import { MIN_SIZE_STAR, MAX_SIZE_STAR } from '../constants'
+
+const { star } = useObjects()
+</script>
+
 <template>
   <header>
     <h1>Star System Parameters</h1>
@@ -11,26 +18,10 @@
         <input type="range"
           :min="MIN_SIZE_STAR"
           :max="MAX_SIZE_STAR"
-          :value="star.radius"
-          @input="updateRadius($event.target.value)"
+          v-model.number="star.radius"
         />
         ({{ star.radius }})
       </label>
     </menu>
   </header>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-import useObjects from '../useObjects'
-import {
-  MIN_SIZE_STAR,
-  MAX_SIZE_STAR,
-} from '../constants'
-
-const { star } = useObjects()
-
-function updateRadius (radius) {
-  star.radius = parseInt(radius)
-}
-</script>

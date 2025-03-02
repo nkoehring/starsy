@@ -44,7 +44,7 @@ html,body {
   color: var(--fg-app);
 }
 
-input[type="text"], input[type="number"] {
+input[type="text"], input[type="number"], select {
   background: transparent;
   border: 1px solid var(--fg-app);
   color: var(--fg-app);
@@ -57,7 +57,11 @@ input[type="text"]:focus {
 button {
   cursor: pointer;
 }
-button.settings, button.delete, button.add, button.less, button.close, button.move, button.dice {
+button:disabled {
+  opacity: .5;
+  cursor: default;
+}
+button.action {
   width: 48px;
   height: 48px;
   border: 4px solid var(--bg-app);
@@ -198,7 +202,7 @@ a { color: #AAF; }
 #system-settings button { height: 2em; }
 #system-settings input { width: 200px; }
 #system-settings input[type="text"],
-.satellite-name input[type="text"] {
+.satellite-label input[type="text"] {
   margin-left: 1em;
   padding: .5em 1em .4em;
 }
@@ -245,6 +249,10 @@ a { color: #AAF; }
 }
 #object-settings section.satellite-list {
   margin: 2em 0;
+}
+select {
+  padding: .3em .5em;
+  font-size: 1em;
 }
 
 .satellite-list-entry {
@@ -303,7 +311,7 @@ a { color: #AAF; }
   margin-left: 2em;
 }
 
-.satellite-name > input[type="text"] {
+.satellite-label > input[type="text"] {
   width: 9em;
 }
 .satellite-radius > input[type="range"] {

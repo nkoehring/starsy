@@ -1,3 +1,15 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+export interface Props {
+  labelFonts: string[]
+  themes: string[]
+}
+const props = defineProps<Props>()
+const selectedFont = ref(props.labelFonts[0])
+const selectedTheme = ref(props.themes[0])
+</script>
+
 <template>
   <header>
     <div class="headline">
@@ -20,15 +32,3 @@
     </div>
   </header>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-
-const props = defineProps({
-  labelFonts: Array,
-  themes: Array,
-})
-
-const selectedFont = ref(props.labelFonts[0])
-const selectedTheme = ref('default')
-</script>

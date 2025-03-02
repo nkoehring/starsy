@@ -1,3 +1,33 @@
+<script setup lang="ts">
+import useObjects from '../useObjects'
+import useStorage from '../useStorage'
+
+const { star, primaryBodies, replaceCurrent } = useObjects()
+const {
+  storageInfo,
+  loadPreset,
+  deletePreset,
+} = useStorage(star, primaryBodies)
+
+function loadJSONFile(event: Event) {
+  const files = (event.target as HTMLInputElement).files
+  if (!files || files.length === 0) return
+
+  const reader = new FileReader()
+  reader.onload = (evt: ProgressEvent<FileReader>) => {
+    const result = evt.target?.result as string | undefined
+    if (!result) return
+    try {
+      const preset = JSON.parse(result)
+      replaceCurrent(preset)
+    } catch {
+      alert('Failed to read file. Are you sure, it is a valid Starsy JSON file?')
+    }
+  }
+  reader.readAsText(files[0])
+}
+</script>
+
 <template>
   <div>
     <i>(Careful! Loading will overwrite the current state!)</i>
@@ -5,8 +35,10 @@
   <div>
     <h2>Local Storage</h2>
     <ul>
-      <li :key="name" v-for="{ name, star, objects } in storageInfo">
-        {{ name }} ("{{ star }}", {{ objects }} objects)
+      <li :key="name" v-for="{ name, star, primaryBodies, secondaryBodies } in storageInfo">
+        {{ name }} ("{{ star }}",
+        {{ primaryBodies }} primary bodies,
+        {{ secondaryBodies }} secondary bodies (moons/stations))
         <button @click="replaceCurrent(loadPreset(name))">load</button>
         <button @click="deletePreset(name)" v-if="name !== 'example'">delete</button>
       </li>
@@ -14,39 +46,9 @@
   </div>
   <div>
     <h2>File System</h2>
-    <input type="file" @change="loadJSONFile($event)" />
+    <input type="file" accept=".json,.starsy" @change="loadJSONFile($event)" />
   </div>
 </template>
-
-<script setup>
-import useObjects from '../useObjects'
-import useStorage from '../useStorage'
-
-const { star, objects, replaceCurrent } = useObjects()
-const {
-  storageInfo,
-  loadPreset,
-  savePreset,
-  deletePreset,
-  currentName,
-} = useStorage(star, objects)
-
-function loadJSONFile (event) {
-  const file = event.target.files[0]
-  if (!file) return
-
-  const reader = new FileReader()
-  reader.onload = evt => {
-    try {
-      const preset = JSON.parse(evt.target.result)
-      replaceCurrent(preset)
-    } catch {
-      alert('Failed to read file. Are you sure, it is a valid Starsy JSON file?')
-    }
-  }
-  reader.readAsText(file)
-}
-</script>
 
 <style scoped>
 div {

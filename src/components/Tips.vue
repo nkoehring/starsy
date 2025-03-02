@@ -1,30 +1,24 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+
+export interface Props {
+  collapsible?: boolean
+  hiddenByDefault?: boolean
+}
+const { collapsible = true, hiddenByDefault = false } = defineProps<Props>()
+const isShowingTips = ref(!hiddenByDefault)
+</script>
+
 <template>
   <ul class="info">
     <header>
       Tips:
-      <button @click="tipsShown = !tipsShown" v-if="collapsible">
-        {{ tipsShown ? 'collapse' : 'expand' }}
+      <button @click="isShowingTips = !isShowingTips" v-if="collapsible">
+        {{ isShowingTips ? 'collapse' : 'expand' }}
       </button>
     </header>
-    <template v-if="tipsShown">
+    <template v-if="isShowingTips">
       <slot />
     </template>
   </ul>
 </template>
-
-<script setup>
-import { ref } from 'vue'
-
-const props = defineProps({
-  collapsible: {
-    type: Boolean,
-    default: true,
-  },
-  hiddenByDefault: {
-    type: Boolean,
-    default: false,
-  },
-})
-
-const tipsShown = ref(!props.hiddenByDefault)
-</script>
