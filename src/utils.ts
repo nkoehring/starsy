@@ -63,3 +63,8 @@ export function updateOldPreset(preset: OldPreset): StarSystem {
     })
   }
 }
+
+export function getStarColor(size: number) {
+  console.debug('would calculate color for size', size)
+  return '#FFB'
+}

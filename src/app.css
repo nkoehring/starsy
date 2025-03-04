@@ -26,8 +26,6 @@
   --bg-app: #333;
   --fg-app: #EEE;
   --fill-star: #FFB;
-  --bg-settings: var(--bg-graphic);
-  --fg-settings: var(--fg-graphic);
   --title-font: xolonium;
   --fg-danger: #C00;
 }
@@ -45,9 +43,11 @@ html,body {
 }
 
 input[type="text"], input[type="number"], select {
-  background: transparent;
+  background: var(--bg-app);
   border: 1px solid var(--fg-app);
   color: var(--fg-app);
+  font-size: 1rem;
+  padding: .2em 0 .2em .4em;
 }
 input[type="text"]:focus {
   outline: 2px solid var(--fg-app);
@@ -56,6 +56,14 @@ input[type="text"]:focus {
 
 button {
   cursor: pointer;
+  color: var(--fg-app);
+  border: 1px solid var(--fg-app);
+  border-radius: 4px;
+  background: var(--bg-app);
+  font-size: 1rem;
+}
+button.selected {
+  outline: 2px solid var(--hl-graphic);
 }
 button:disabled {
   opacity: .5;
@@ -78,13 +86,18 @@ button.less { background-image: url(./assets/less.png); }
 button.close { background-image: url(./assets/close.png); }
 button.move { background-image: url(./assets/move.png); }
 button.dice { background-image: url(./assets/dice.png); }
+button.edit { background-image: url(./assets/pencil.png); }
 
-body.theme-paper button.settings { background-image: url(./assets/change_inverted.png); }
-body.theme-paper button.add { background-image: url(./assets/add_inverted.png); }
-body.theme-paper button.less { background-image: url(./assets/less_inverted.png); }
-body.theme-paper button.close { background-image: url(./assets/close_inverted.png); }
-body.theme-paper button.move { background-image: url(./assets/move_inverted.png); }
-body.theme-paper button.dice { background-image: url(./assets/dice_inverted.png); }
+button.action.example.bright { background-image: url(./assets/dice_inverted.png); }
+button.action.example.dark { margin-left: .2em; background-image: url(./assets/dice.png); }
+
+:root.bright-theme button.settings { background-image: url(./assets/change_inverted.png); }
+:root.bright-theme button.add { background-image: url(./assets/add_inverted.png); }
+:root.bright-theme button.less { background-image: url(./assets/less_inverted.png); }
+:root.bright-theme button.close { background-image: url(./assets/close_inverted.png); }
+:root.bright-theme button.move { background-image: url(./assets/move_inverted.png); }
+:root.bright-theme button.dice { background-image: url(./assets/dice_inverted.png); }
+:root.bright-theme button.edit { background-image: url(./assets/pencil_inverted.png); }
 
 button.small {
   width: 24px;
@@ -101,41 +114,6 @@ button.small {
 }
 .info > header { font-weight: bold; }
 .info > li { margin-top: .75em; }
-
-body.theme-retro {
-  --bg-app: #4B4839;
-  --fg-app: #E4DCB5;
-  --bg-graphic: #E4DCB5;
-  --fg-graphic: #4B4839;
-  --hl-graphic: #222;
-  --fill-star: var(--fg-graphic);
-  --bg-settings: var(--bg-graphic);
-  --fg-settings: var(--fg-graphic);
-}
-body.theme-inverse {
-  --bg-app: #333;
-  --fg-app: #E4DCB5;
-  --bg-graphic: #4B4839;
-  --fg-graphic: #E4DCB5;
-  --hl-graphic: #FF0;
-  --fill-star: var(--fg-graphic);
-  --bg-settings: var(--bg-graphic);
-  --fg-settings: var(--fg-graphic);
-}
-body.theme-paper {
-  --bg-app: #FFF;
-  --fg-app: #000;
-  --bg-graphic: #FFF;
-  --fg-graphic: #000;
-  --hl-graphic: #555;
-  --fill-star: var(--fg-graphic);
-  --bg-settings: #DDD;
-  --fg-settings: #000;
-}
-
-body.title-douar { --title-font: 'douar'; }
-body.title-lack { --title-font: 'lack'; }
-body.title-xolonium { --title-font: 'xolonium'; }
 
 svg { background: var(--bg-graphic); }
 line { stroke: var(--fg-graphic); }
@@ -155,7 +133,7 @@ h1 {
 }
 
 a { color: #AAF; }
-.theme-paper a { color: #33A; }
+:root.bright-theme a { color: #33A }
 
 #app > header {
   display: flex;
@@ -192,22 +170,27 @@ a { color: #AAF; }
 
 #system-settings {
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  width: 100%;
   padding: 0;
   list-style: none;
 }
 
-#system-settings > label {
+#system-settings > li {
   display: flex;
+  gap: .5em;
   align-items: center;
-  min-width: 300px;
-  margin: 0 1em;
+  justify-content: start;
+}
+
+#system-settings label {
+  display: block;
+  white-space: nowrap;
 }
 #system-settings button { height: 2em; }
-#system-settings input { width: 200px; }
+#system-settings input[type="text"] { width: 180px; }
 #system-settings input[type="text"],
 .satellite-label input[type="text"] {
-  margin-left: 1em;
   padding: .5em 1em .4em;
 }
 
@@ -255,8 +238,8 @@ a { color: #AAF; }
   margin: 2em 0;
 }
 select {
-  padding: .3em .5em;
-  font-size: 1em;
+  padding: .4em .5em;
+  font-size: 1rem;
 }
 
 .satellite-list-entry {
@@ -302,7 +285,7 @@ select {
   width: 75%;
   text-align: right;
 }
-.satellite-list-entry > .options, .satellite-list-entry > .options > span {
+.options, .satellite-list-entry > .options > span {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
@@ -349,7 +332,7 @@ select {
   border-radius: 8px;
   transition: border-color .2s ease-out;
 }
-.cta:hover {
+.cta:hover:not(:disabled) {
   outline: 1px solid var(--fg-app);
   border-color: transparent;
 }
@@ -375,4 +358,80 @@ select {
 }
 .highlighted {
   font-weight: bold;
+}
+
+#modal-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #0008;
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#modal-container > .content {
+  max-width: 640px;
+  max-height: 90vh;
+  min-width: 100px;
+  min-height: 100px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: var(--bg-app);
+  position: relative;
+  border-radius: .4em;
+}
+
+#modal-container > .content > button {
+  position: absolute;
+  top: .2em;
+  right: .2em;
+}
+.modal-header {
+  display: block;
+  margin: 0 4rem 0 1.5rem;
+}
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0 1.5rem 1.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+form > label > .labelinput {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+form > label > .labelinput > div {
+  display: flex;
+  gap: .5rem;
+}
+form > .form-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+form .error-message {
+  margin-top: .2em;
+  font-size: .8rem;
+  text-align: right;
+  color: var(--fg-danger);
+}
+
+
+.font-example {
+  padding: .2em;
+  text-align: center;
+  font-size: 1.5rem;
 }

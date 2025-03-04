@@ -1,13 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import useModal from '../useModal'
+import ThemeEditor from './ThemeEditor.vue'
+import type { StarsyTheme } from '../types'
 
 export interface Props {
-  labelFonts: string[]
+  fonts: string[]
   themes: string[]
+  currentTheme: StarsyTheme
+}
+export interface Events {
+  (e: 'select:theme', value: string): void,
 }
 const props = defineProps<Props>()
-const selectedFont = ref(props.labelFonts[0])
-const selectedTheme = ref(props.themes[0])
+const emit = defineEmits<Events>()
+const { showModal } = useModal()
 </script>
 
 <template>
@@ -18,17 +25,15 @@ const selectedTheme = ref(props.themes[0])
     </div>
     <div class="options">
       <label>
-        Title Font
-        <select v-model="selectedFont" @change="$emit('select:font', selectedFont)">
-          <option v-for="f in labelFonts">{{ f }}</option>
-        </select>
-      </label>
-      <label>
-        Color Theme
-        <select v-model="selectedTheme" @change="$emit('select:theme', selectedTheme)">
+        Theme
+        <select
+          :value="currentTheme.label"
+          @change="emit('select:theme', ($event.target as HTMLSelectElement).value)"
+        >
           <option v-for="t in themes">{{ t }}</option>
         </select>
       </label>
+      <button class="action edit" @click="showModal(ThemeEditor)" />
     </div>
   </header>
 </template>

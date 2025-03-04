@@ -12,46 +12,18 @@ import PresetLoader from './components/PresetLoader.vue'
 import PresetSaver from './components/PresetSaver.vue'
 
 import useObjects from './useObjects'
+import useTheme from './useTheme'
+import useModal from './useModal'
 
 const { selectedObject } = useObjects()
-const labelFonts = ['xolonium', 'douar', 'lack']
-const themes = ['default', 'retro', 'inverse', 'paper']
-
-type ValidFont = typeof labelFonts[number]
-type ValidTheme = typeof themes[number]
-
-function setTheme(theme: ValidTheme) {
-  const classes = document.body.className.split(' ')
-  const currentTheme = classes.find(c => c.startsWith('theme-'))
-  const newTheme = `theme-${theme}`
-
-  if (currentTheme) {
-    document.body.classList.replace(currentTheme, newTheme)
-  } else {
-    document.body.classList.add(newTheme)
-  }
-}
-function setFont(font: ValidFont) {
-  const classes = document.body.className.split(' ')
-  const currentFont = classes.find(c => c.startsWith('title-'))
-  const newFont = `title-${font}`
-
-  if (currentFont) {
-    document.body.classList.replace(currentFont, newFont)
-  } else {
-    document.body.classList.add(newFont)
-  }
-}
-
-setTheme(themes[0])
-setFont(labelFonts[0])
+const { fonts, themes, currentTheme, applyTheme } = useTheme()
+const { isModalShown, ModalContent, modalData, hideModal } = useModal()
 </script>
 
 <template>
   <Headline
-    v-bind="{ labelFonts, themes }"
-    @select:font="setFont($event)"
-    @select:theme="setTheme($event)"
+    v-bind="{ fonts, themes, currentTheme }"
+    @select:theme="applyTheme($event)"
   />
   <SystemDiagram />
 
@@ -87,4 +59,13 @@ setFont(labelFonts[0])
     © 2022 - today |
     <a target="_blank" rel="noopener" href="https://github.com/nkoehring/starsy">open source</a>
   </footer>
+
+  <div id="modal-container" v-if="isModalShown">
+    <div class="content">
+      <template v-if="ModalContent">
+        <ModalContent :modal-data="modalData" @close="hideModal()" />
+      </template>
+      <button class="close action" @click="hideModal()" />
+    </div>
+  </div>
 </template>

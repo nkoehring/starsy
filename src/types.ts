@@ -1,6 +1,29 @@
+type HexColor = `#${string}`
+
+export interface StarsyTheme {
+  label: string
+  font: string // name (...or URL to font file?)
+  bgApp: HexColor
+  fgApp: HexColor
+  bgGraphic: HexColor // system diagram background
+  fgGraphic: HexColor // system diagram foreground
+  hlGraphic: HexColor // system diagram highlight
+  fillStar: 'auto' | HexColor
+  fgDanger: HexColor
+  isBright: boolean
+  system: boolean
+}
+
+export interface StarsySettings {
+  storedThemes: StarsyTheme[]
+  currentTheme: StarsyTheme
+}
+
 export interface Star {
   designation: string
   radius: number
+  // for future use
+  color?: 'auto' | HexColor
 }
 
 export interface Satellite {

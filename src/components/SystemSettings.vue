@@ -1,6 +1,7 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import useObjects from '../useObjects'
-import { MIN_SIZE_STAR, MAX_SIZE_STAR } from '../constants'
+import { MIN_SIZE_STAR as min, MAX_SIZE_STAR as max } from '../constants'
 
 const { star } = useObjects()
 </script>
@@ -9,19 +10,15 @@ const { star } = useObjects()
   <header>
     <h1>Star System Parameters</h1>
     <menu id="system-settings">
-      <label>
-        Name
+      <li>
+        <label>Name</label>
         <input type="text" v-model="star.designation" />
-      </label>
-      <label>
-        Star Size
-        <input type="range"
-          :min="MIN_SIZE_STAR"
-          :max="MAX_SIZE_STAR"
-          v-model.number="star.radius"
-        />
-        ({{ star.radius }})
-      </label>
+      </li>
+      <li>
+        <label>Star Size</label>
+        <input type="range" :min :max v-model.number="star.radius" />
+        <input type="number" :min :max v-model.number="star.radius">
+      </li>
     </menu>
   </header>
 </template>

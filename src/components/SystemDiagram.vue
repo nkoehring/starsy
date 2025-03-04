@@ -2,6 +2,7 @@
 import type { Planet } from '../types'
 import { ref, computed } from 'vue'
 import useObjects from '../useObjects'
+// import { getStarColor } from '../utils'
 
 const {
   star,
