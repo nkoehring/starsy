@@ -57,6 +57,7 @@ const { isModalShown, ModalContent, modalData, hideModal } = useModal()
     An experiment by
     <a target="_blank" rel="noopener" href="https://koehr.ing">koehr</a> |
     © 2022 - today |
+    <a target="_blank" rel="noopener" href="https://reddit.com/r/starsy">discuss on reddit</a> |
     <a target="_blank" rel="noopener" href="https://github.com/nkoehring/starsy">open source</a>
   </footer>
 
