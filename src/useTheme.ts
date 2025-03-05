@@ -195,10 +195,6 @@ export default function useStaryTheme() {
   const currentTheme = computed(() => store.value.currentTheme)
   const themes = computed<string[]>(() => store.value.storedThemes.map(t => t.label))
 
-  watch(store, (changedStore) => {
-    console.log('stored themes updated!', changedStore)
-  }, { deep: true })
-
   return {
     currentTheme,
     themes,
