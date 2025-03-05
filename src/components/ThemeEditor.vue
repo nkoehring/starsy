@@ -24,6 +24,7 @@ const {
 
 const { canQueryLocalFonts, queryLocalFonts, loadFont, localFonts } = useLocalFonts()
 
+const originalLabel = ref(currentTheme.value.label)
 const editedTheme = ref(structuredClone(toRaw(currentTheme.value)))
 const error = ref<null | { field: string, msg: string }>(null)
 
@@ -50,7 +51,7 @@ const attemptThemeCreation = () => {
 }
 
 const attemptSave = () => {
-  const success = overwriteTheme(editedTheme.value)
+  const success = overwriteTheme(originalLabel.value, editedTheme.value)
   if (!success) {
     error.value = {
       field: 'form',

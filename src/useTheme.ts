@@ -175,8 +175,8 @@ const removeThemeByLabel = (label: string): boolean => {
   return true
 }
 
-const overwriteTheme = (theme: StarsyTheme): boolean => {
-  const idx = store.value.storedThemes.findIndex(t => t.label === theme.label)
+const overwriteTheme = (originalLabel: string, theme: StarsyTheme): boolean => {
+  const idx = store.value.storedThemes.findIndex(t => t.label === originalLabel)
   if (idx < 0) return false
 
   const oldTheme = store.value.storedThemes[idx]
@@ -184,7 +184,7 @@ const overwriteTheme = (theme: StarsyTheme): boolean => {
 
   store.value.storedThemes[idx] = theme
 
-  if (store.value.currentTheme.label === theme.label) {
+  if (store.value.currentTheme.label === originalLabel) {
     store.value.currentTheme = theme
   }
 
