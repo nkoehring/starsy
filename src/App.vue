@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { ref, computed } from 'vue'
 
 import Headline from './components/Headline.vue'
 import SystemDiagram from './components/SystemDiagram.vue'
@@ -10,27 +10,46 @@ import ObjectList from './components/ObjectList.vue'
 import ObjectSettings from './components/ObjectSettings.vue'
 import PresetLoader from './components/PresetLoader.vue'
 import PresetSaver from './components/PresetSaver.vue'
+import ThemeEditor from './components/ThemeEditor.vue'
+import PopupMenu from './components/PopupMenu.vue'
 
 import useObjects from './useObjects'
 import useTheme from './useTheme'
 import useLocalFonts from './useLocalFonts'
 import useModal from './useModal'
+import useAppMenu from './useAppMenu'
 
 const { selectedObject } = useObjects()
 const { fonts, themes, currentTheme, applyTheme } = useTheme()
 const { loadFont } = useLocalFonts()
-const { isModalShown, ModalContent, modalData, hideModal } = useModal()
+const { isModalShown, ModalContent, modalData, showModal, hideModal } = useModal()
+const { isShowingMenu, appMenuPosition, toggleAppMenu } = useAppMenu()
+
+const isPrintingMode = ref(false)
+const appMenuItems = [
+  { label: 'Add/Edit Theme', value: 'theme-editor' },
+  // { label: 'Export', value: 'export' },
+]
 
 // check if theme uses a local font, and install it
 if (fonts.indexOf(currentTheme.value.font) <= 0) {
   loadFont(currentTheme.value.font)
 }
+
+const handleAppMenuSelection = (selection: string) => {
+  switch (selection) {
+    case "theme-editor":
+      showModal(ThemeEditor)
+      break
+  }
+}
 </script>
 
 <template>
-  <Headline
+  <Headline v-show="!isPrintingMode"
     v-bind="{ fonts, themes, currentTheme }"
     @select:theme="applyTheme($event)"
+    @select:menu="toggleAppMenu($event)"
   />
   <SystemDiagram />
 
@@ -76,4 +95,10 @@ if (fonts.indexOf(currentTheme.value.font) <= 0) {
       <button class="close action" @click="hideModal()" />
     </div>
   </div>
+
+  <PopupMenu v-model="isShowingMenu"
+    :menu-items="appMenuItems"
+    :position="appMenuPosition"
+    @select="handleAppMenuSelection($event)"
+  />
 </template>

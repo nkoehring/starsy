@@ -11,7 +11,7 @@ The application is working but certain features are missing or unpolished:
 
 ✅ Visualization of the Star System
 
-✅ Multiple themes
+✅ ~Multiple~~Themes~ Full theming support
 
 ✅ Manipulation of objects by value
 

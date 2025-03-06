@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import useModal from '../useModal'
-import ThemeEditor from './ThemeEditor.vue'
 import type { StarsyTheme } from '../types'
 
 export interface Props {
@@ -11,10 +10,10 @@ export interface Props {
 }
 export interface Events {
   (e: 'select:theme', value: string): void,
+  (e: 'select:menu', value: PointerEvent): void,
 }
 const props = defineProps<Props>()
 const emit = defineEmits<Events>()
-const { showModal } = useModal()
 </script>
 
 <template>
@@ -33,7 +32,7 @@ const { showModal } = useModal()
           <option v-for="t in themes">{{ t }}</option>
         </select>
       </label>
-      <button class="action edit" @click="showModal(ThemeEditor)" />
+      <button class="action menu" @click="emit('select:menu', $event)" />
     </div>
   </header>
 </template>

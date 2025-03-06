@@ -1,7 +1,7 @@
 {
   "name": "starsy",
   "description": "Random Star System Generator",
-  "version": "0.4.10",
+  "version": "0.4.11",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

@@ -65,3 +65,8 @@ export interface OldPreset {
   star: Star
   objects: OldPlanet[]
 }
+
+export interface LabeledValue<T = string> {
+  label: string
+  value: T
+}

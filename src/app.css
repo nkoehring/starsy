@@ -87,6 +87,7 @@ button.close { background-image: url(./assets/close.png); }
 button.move { background-image: url(./assets/move.png); }
 button.dice { background-image: url(./assets/dice.png); }
 button.edit { background-image: url(./assets/pencil.png); }
+button.menu { background-image: url(./assets/menu.png); }
 
 button.action.example.bright { background-image: url(./assets/dice_inverted.png); }
 button.action.example.dark { margin-left: .2em; background-image: url(./assets/dice.png); }
@@ -98,6 +99,7 @@ button.action.example.dark { margin-left: .2em; background-image: url(./assets/d
 :root.bright-theme button.move { background-image: url(./assets/move_inverted.png); }
 :root.bright-theme button.dice { background-image: url(./assets/dice_inverted.png); }
 :root.bright-theme button.edit { background-image: url(./assets/pencil_inverted.png); }
+:root.bright-theme button.menu { background-image: url(./assets/menu_inverted.png); }
 
 button.small {
   width: 24px;
@@ -380,7 +382,7 @@ select {
   min-height: 100px;
   overflow: auto;
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   gap: 1rem;
   background: var(--bg-app);
   position: relative;
@@ -398,14 +400,14 @@ select {
 }
 .modal-content {
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   gap: 1rem;
   margin: 0 1.5rem 1.5rem;
 }
 
 form {
   display: flex;
-  flex-direction: column;
+  flex-flow: column nowrap;
   gap: 1rem;
 }
 form > label > .labelinput {
@@ -434,4 +436,46 @@ form .error-message {
   padding: .2em;
   text-align: center;
   font-size: 1.5rem;
+}
+
+menu.popup-menu {
+  position: absolute;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: .2rem;
+  width: 10rem;
+  margin: 0 0 0 -11rem;
+  background: #888A;
+  backdrop-filter: blur(2px);
+  padding: .2em;
+  border-radius: .4em;
+  list-style: none;
+}
+
+menu.popup-menu > li {
+  height: 3rem;
+  padding: 0 1rem;
+  line-height: 3rem;
+  text-align: right;
+  color: var(--fg-app);
+  background: #000A;
+  backdrop-filter: blur(3px);
+  cursor: pointer;
+}
+menu.popup-menu > li:first-child {
+  border-top-left-radius: .4em;
+  border-top-right-radius: .4em;
+}
+menu.popup-menu > li:last-child {
+  border-bottom-left-radius: .4em;
+  border-bottom-right-radius: .4em;
+}
+menu.popup-menu > li:hover {
+  background: #000;
+}
+:root.bright-theme menu.popup-menu > li {
+  background: #FFFA;
+}
+:root.bright-theme menu.popup-menu > li:hover {
+  background: #FFF;
 }
