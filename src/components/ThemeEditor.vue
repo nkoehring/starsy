@@ -28,6 +28,12 @@ const originalLabel = ref(currentTheme.value.label)
 const editedTheme = ref(structuredClone(toRaw(currentTheme.value)))
 const error = ref<null | { field: string, msg: string }>(null)
 
+const ensureLocalFontIsLoaded = () => {
+  const name = editedTheme.value.font
+  if (fonts.indexOf(name) >= 0) return // not local font
+  loadFont(name)
+}
+
 const attemptThemeCreation = () => {
   error.value = null
 
@@ -102,9 +108,10 @@ const attemptThemeRemoval = () => {
       <label>
         <div class="labelinput">
           Theme Font
-          <select v-model="editedTheme.font">
+          <select v-model="editedTheme.font" @change="ensureLocalFontIsLoaded()">
             <option v-for="f in fonts">{{ f }}</option>
-            <option v-for="lf in localFonts">{{ lf.fullName }}</option>
+            <option v-for="lf in localFonts">{{ lf.postscriptName }}</option>
+            <option v-if="localFonts.length === 0 && fonts.indexOf(editedTheme.font) < 0">{{ editedTheme.font }}</option>
           </select>
 
           <button v-if="canQueryLocalFonts"

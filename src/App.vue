@@ -13,11 +13,18 @@ import PresetSaver from './components/PresetSaver.vue'
 
 import useObjects from './useObjects'
 import useTheme from './useTheme'
+import useLocalFonts from './useLocalFonts'
 import useModal from './useModal'
 
 const { selectedObject } = useObjects()
 const { fonts, themes, currentTheme, applyTheme } = useTheme()
+const { loadFont } = useLocalFonts()
 const { isModalShown, ModalContent, modalData, hideModal } = useModal()
+
+// check if theme uses a local font, and install it
+if (fonts.indexOf(currentTheme.value.font) <= 0) {
+  loadFont(currentTheme.value.font)
+}
 </script>
 
 <template>

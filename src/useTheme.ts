@@ -4,6 +4,7 @@ import type { StarsySettings, StarsyTheme } from './types'
 
 const fonts = ['xolonium', 'douar', 'lack']
 
+/** The default theme */
 const themeDefault: StarsyTheme = {
   label: 'default',
   font: 'xolonium',
@@ -18,6 +19,7 @@ const themeDefault: StarsyTheme = {
   system: true,
 } as const
 
+/** A sepia coloured retro style theme */
 const themeRetro: StarsyTheme = {
   label: 'retro',
   font: 'xolonium',
@@ -32,6 +34,7 @@ const themeRetro: StarsyTheme = {
   system: true,
 } as const
 
+/** A sepia coloured retro style theme, but with a dark background */
 const themeInverse: StarsyTheme = {
   label: 'inverse',
   font: 'xolonium',
@@ -46,6 +49,7 @@ const themeInverse: StarsyTheme = {
   system: true,
 } as const
 
+/** A black and white theme, meant to be used for printing */
 const themePaper: StarsyTheme = {
   label: 'paper',
   font: 'xolonium',
@@ -60,6 +64,7 @@ const themePaper: StarsyTheme = {
   system: true,
 } as const
 
+/** Lots of bold blue and yellow colours */
 const themeYellowBlue: StarsyTheme = {
   label: 'yellow-blue',
   font: 'xolonium',
@@ -74,6 +79,7 @@ const themeYellowBlue: StarsyTheme = {
   system: true,
 } as const
 
+/** List of system themes */
 const systemThemes: Record<string, StarsyTheme> = {
   default: themeDefault,
   inverse: themeInverse,
@@ -82,6 +88,7 @@ const systemThemes: Record<string, StarsyTheme> = {
   ['yellow-blue']: themeYellowBlue,
 }
 
+/** Apply values from a theme to the respective CSS variables */
 function applyTheme(theme: StarsyTheme) {
   const rootEl = window.document.documentElement
 
@@ -103,6 +110,10 @@ function applyTheme(theme: StarsyTheme) {
   else rootEl.classList.remove('bright-theme')
 }
 
+/**
+  * Update stored themes with newest version, ignoring user themes
+  * and converting deleted but used system themes to user themes
+  */
 const updateThemes = (storedThemes: StarsyTheme[], currentTheme: StarsyTheme) => {
   const knownThemeLabels = Object.keys(systemThemes)
 
@@ -142,6 +153,7 @@ store.value = updateThemes(store.value.storedThemes, store.value.currentTheme)
 // apply the stored theme
 applyTheme(store.value.currentTheme)
 
+/** Find a theme by its label and apply it */
 const applyThemeByLabel = (themeLabel: string): boolean => {
   const theme = store.value.storedThemes.find(t => t.label === themeLabel)
   if (!theme) return false
@@ -152,6 +164,7 @@ const applyThemeByLabel = (themeLabel: string): boolean => {
   return true
 }
 
+/** Add a theme to the list of stored themes and select it */
 const addTheme = (theme: StarsyTheme): boolean => {
   const exists = store.value.storedThemes.some(t => t.label === theme.label)
   if (exists) return false
@@ -164,6 +177,7 @@ const addTheme = (theme: StarsyTheme): boolean => {
   return true
 }
 
+/** Find a theme by its label and remove it from the stored themes */
 const removeThemeByLabel = (label: string): boolean => {
   const idx = store.value.storedThemes.findIndex(t => t.label === label)
   if (idx < 0) return false
@@ -175,6 +189,7 @@ const removeThemeByLabel = (label: string): boolean => {
   return true
 }
 
+/** Find a theme by its original label and overwrite it with a new theme */
 const overwriteTheme = (originalLabel: string, theme: StarsyTheme): boolean => {
   const idx = store.value.storedThemes.findIndex(t => t.label === originalLabel)
   if (idx < 0) return false
@@ -191,6 +206,17 @@ const overwriteTheme = (originalLabel: string, theme: StarsyTheme): boolean => {
   return true
 }
 
+/**
+ * Composable for workign with themes
+ * @returns Object containing:
+ * - currentTheme - the currently selected theme
+ * - themes - a list of stored themes
+ * - fonts - a list of known fonts (without local fonts)
+ * - addTheme - Function to add a new theme
+ * - overwriteTheme - Function to overwrite an existing theme
+ * - applyTheme - Function to apply a theme
+ * - removeTheme - Function to remove a theme from storage
+ */
 export default function useStaryTheme() {
   const currentTheme = computed(() => store.value.currentTheme)
   const themes = computed<string[]>(() => store.value.storedThemes.map(t => t.label))

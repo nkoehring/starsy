@@ -11,18 +11,47 @@ import {
 import { steepCurve, copyProperties } from './utils'
 import exampleData from './example-data/sol'
 
+/** The star data, initialized with example data */
 const star = reactive(exampleData.star)
+/** Array of primary celestial bodies, initialized with example data */
 const primaryBodies = reactive(exampleData.primaryBodies)
+/** Currently selected primary celestial body, or null when nothing is selected */
 const selectedObject = ref<null | Planet>(null)
+/** Most recently deleted object with original index, used for undo functionality */
 const deletedObject = ref<null | { index: number, object: Planet}>(null)
 
+/** Computed property that calculates the x-coord center offset for the star,
+  * using a steep curve function to scale the offset based on radius, so that
+  * the overall width of the visible part stays roughly the same.
+  */
 const starCX = computed(() => {
   const r = star.radius
   return -1 * r * steepCurve(r, 50, 0.955)
 })
 
+/**
+ * Composable for managing celestial objects in a star system
+ * 
+ * @returns Object containing:
+ *  - star: Reactive reference to the central star
+ *  - starCX: Computed x-coordinate center of the star
+ *  - primaryBodies: Reactive array of primary celestial bodies
+ *  - selectedObject: Reference to the currently selected object
+ *  - deletedObject: Reference to the most recently deleted object for undo
+ *  - addObject: Function to add a new primary celestial body
+ *  - deleteObject: Function to remove a celestial body
+ *  - updateSelectedObject: Function to update properties of the selected object
+ *  - restoreDeleted: Function to restore the most recently deleted object
+ *  - randomizeObject: Function to randomize an object's properties
+ *  - autoLabel: Function to generate a designation based on position
+ *  - replaceCurrent: Function to replace the current system with a new one
+ */
 export default function useObjects() {
 
+  /**
+   * Adds a new primary celestial body to the system
+   * Places it at a reasonable distance from the last body if any exist
+   */
   function addObject() {
     const amount = primaryBodies.length
     let distance = 100
@@ -45,6 +74,10 @@ export default function useObjects() {
     })
   }
 
+  /**
+   * Updates properties of the selected object with validation
+   * @param payload - Object containing the properties to update
+   */
   function updateSelectedObject(payload: Partial<Planet>) {
     if (payload.label && !payload.label.trim().length && selectedObject.value) {
       payload.label = selectedObject.value.designation
@@ -65,6 +98,11 @@ export default function useObjects() {
     if (selectedObject.value) copyProperties(payload, selectedObject.value)
   }
 
+  /**
+   * Deletes a celestial body from the system
+   * Prompts for confirmation if a previously deleted object exists
+   * @param object - Optional planet to delete; uses selectedObject if not provided
+   */
   function deleteObject(object?: Planet) {
     if (!object && !selectedObject.value) return
 
@@ -89,6 +127,10 @@ export default function useObjects() {
     deletedObject.value = { index, object: selection }
   }
 
+  /**
+   * Restores the most recently deleted object to its original position
+   * Does nothing if no object has been marked for deletion
+   */
   function restoreDeleted() {
     if (deletedObject.value === null) return
 
@@ -99,15 +141,29 @@ export default function useObjects() {
     deletedObject.value = null
   }
 
+  /**
+   * Generates an automatic label for a planet based on its position in the system
+   * @param object - The planet to generate a label for
+   * @returns A designation string combining star designation and planet index
+   */
   function autoLabel(object: Planet) {
     const index = primaryBodies.indexOf(object)
     return `${star.designation}-${index}`
   }
 
+  /**
+   * Randomizes the properties of a celestial body
+   * (implementation placeholder)
+   * @param object - The planet to randomize
+   */
   function randomizeObject(object: Planet) {
     console.log('randomize', object)
   }
 
+  /**
+   * Replaces the current star system with a new one
+   * @param preset - The star system data to use as replacement
+   */
   function replaceCurrent(preset: StarSystem) {
     const { star: newStar, primaryBodies: newObjects } = preset
 
