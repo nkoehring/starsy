@@ -143,9 +143,7 @@ const attemptThemeRemoval = () => {
           Diagram Star Color
           <div>
             <button type="button" @click="editedTheme.fillStar = 'auto'"
-              disabled
               :class="{ selected: editedTheme.fillStar === 'auto' }"
-              title="- COMING SOON - Automatically set the star color according to its size, from dark red dwarfs to bright blue giants."
             >
               auto
             </button>

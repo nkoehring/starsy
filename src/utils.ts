@@ -6,6 +6,7 @@ import {
   Planet,
   Satellite,
 } from "./types"
+import { MIN_SIZE_STAR, MAX_SIZE_STAR } from './constants'
 
 /** Function to return a steep curve from [minX,0] to [infinity,maxY]
  *
@@ -67,12 +68,41 @@ export function updateOldPreset(preset: OldPreset): StarSystem {
   }
 }
 
+const sizeDelta = MAX_SIZE_STAR - MIN_SIZE_STAR
+
+const starColorStops = [
+  { size: MIN_SIZE_STAR, rgb: [136, 85, 0] },
+  { size: MIN_SIZE_STAR + sizeDelta * 0.1, rgb: [255, 140, 0] },
+  { size: MIN_SIZE_STAR + sizeDelta * 0.25, rgb: [255, 255, 136] },
+  { size: MIN_SIZE_STAR + sizeDelta * 0.45, rgb: [248, 248, 255] },
+  { size: MAX_SIZE_STAR, rgb: [102, 153, 238] },
+]
+
 /**
- * (implementation placeholder)
- * calculate the star's colour based on its size
+ * Calculate the star's colour based on its size
  * from small dark red to huge bright blue stars
  */
 export function getStarColor(size: number) {
-  console.debug('would calculate color for size', size)
-  return '#FFB'
+  let factor = 1
+  let rgb1 = starColorStops[0].rgb
+  let rgb2 = starColorStops[0].rgb
+
+  for (let i = 0; i < starColorStops.length; i++) {
+    const s1 = starColorStops[i].size
+    const s2 = starColorStops[i+1].size
+    if (size >= s1 && size <= s2) {
+      factor = (size - s1) / (s2 - s1)
+      rgb1 = starColorStops[i].rgb
+      rgb2 = starColorStops[i+1].rgb
+      break
+    }
+  }
+
+  const [r1, g1, b1] = rgb1
+  const [r2, g2, b2] = rgb2
+  const r = Math.round(r1 + factor * (r2 - r1)).toString(16).padStart(2, '0')
+  const g = Math.round(g1 + factor * (g2 - g1)).toString(16).padStart(2, '0')
+  const b = Math.round(b1 + factor * (b2 - b1)).toString(16).padStart(2, '0')
+
+  return `#${r}${g}${b}`
 }

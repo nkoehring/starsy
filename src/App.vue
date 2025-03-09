@@ -18,14 +18,20 @@ import useTheme from './useTheme'
 import useLocalFonts from './useLocalFonts'
 import useModal from './useModal'
 import useAppMenu from './useAppMenu'
+import { getStarColor } from './utils'
 
-const { selectedObject } = useObjects()
+const { selectedObject, star } = useObjects()
 const { fonts, themes, currentTheme, applyTheme } = useTheme()
 const { loadFont } = useLocalFonts()
 const { isModalShown, ModalContent, modalData, showModal, hideModal } = useModal()
 const { isShowingMenu, appMenuPosition, toggleAppMenu } = useAppMenu()
 
 const isPrintingMode = ref(false)
+const starColor = computed(() => {
+  const auto = currentTheme.value.fillStar === 'auto'
+  if (auto) return getStarColor(star.radius)
+  return currentTheme.value.fillStar
+})
 const appMenuItems = [
   { label: 'Add/Edit Theme', value: 'theme-editor' },
   // { label: 'Export', value: 'export' },
@@ -59,7 +65,8 @@ function showAbout() {
     @select:theme="applyTheme($event)"
     @select:menu="toggleAppMenu($event)"
   />
-  <SystemDiagram />
+
+  <SystemDiagram :style="{ '--fill-star': starColor }" />
 
   <section id="settings">
     <ObjectSettings v-if="selectedObject" />

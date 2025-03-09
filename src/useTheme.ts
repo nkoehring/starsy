@@ -13,7 +13,7 @@ const themeDefault: StarsyTheme = {
   bgGraphic: '#000000',
   fgGraphic: '#FFFFFF',
   hlGraphic: '#FFFFBB',
-  fillStar: '#FFFFBB', // 'auto',
+  fillStar: 'auto',
   fgDanger: '#CC0000',
   isBright: false,
   system: true,
