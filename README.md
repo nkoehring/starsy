@@ -1,13 +1,16 @@
 # Starsy
 
-**Random Star System Generator**
+**Interactive Star System Orbit Mapper for Sci-Fi RPGs**
 
-**Feel free to try it right away at [starsy.netlify.app](https://starsy.netlify.app)**
+Feel free to try it right away at [starsy.netlify.app](https://starsy.netlify.app).
 
+Starsy is a simple, interactive tool for creating beautiful linear obrit maps of star systems.
+
+![screenshot](https://starsy.netlify.app/scrot.jpg)
+
+Join our Reddit community: [r/Starsy](https://www.reddit.com/r/Starsy/)!
 
 ## State of implementation
-
-The application is working but certain features are missing or unpolished:
 
 ✅ Visualization of the Star System
 
@@ -23,9 +26,11 @@ The application is working but certain features are missing or unpolished:
 
 ✅ add new planets and satellites
 
-✅ Export data / Import data
+✅ Export / Import system to disk or LocalStorage
 
 ❌ randomly generate star system
+
+❌ Meta data for all objects, like inhabitants, factions, resources
 
 ❌ astroid belts
 
@@ -34,15 +39,11 @@ The application is working but certain features are missing or unpolished:
 
 Missing features above are all planned for 0.5 release version. Future versions might get some or all of the following features:
 
-⁉ More fonts and themes
-
-⁉ Add meta data to any object
-
 ⁉ Export a single- or multi-page report / dossier / pamphlet
 
-⁉ More object types (stations orbiting the star, mega structures?)
-
 ⁉ (faction?) Icons for planets / moons / stations
+
+⁉ More object types (stations orbiting the star, mega structures?)
 
 ⁉ ...possibly more to come, let me know about your ideas!
 

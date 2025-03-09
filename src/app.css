@@ -134,8 +134,9 @@ h1 {
   font-family: xolonium;
 }
 
-a { color: #AAF; }
-:root.bright-theme a { color: #33A }
+a, button.about-button { color: #AAF; text-decoration: underline; margin: 0; padding: 0; }
+:root.bright-theme a,
+:root.bright-theme button.about-button { color: #33A }
 
 #app > header {
   display: flex;
@@ -362,7 +363,7 @@ select {
   font-weight: bold;
 }
 
-#modal-container {
+#about, #modal-container {
   position: fixed;
   top: 0;
   left: 0;
@@ -375,6 +376,7 @@ select {
   align-items: center;
 }
 
+#about > .content,
 #modal-container > .content {
   max-width: 640px;
   max-height: 90vh;
@@ -387,8 +389,10 @@ select {
   background: var(--bg-app);
   position: relative;
   border-radius: .4em;
+  padding: 1rem 2rem;
 }
 
+#about > .content > button,
 #modal-container > .content > button {
   position: absolute;
   top: .2em;
@@ -478,4 +482,12 @@ menu.popup-menu > li:hover {
 }
 :root.bright-theme menu.popup-menu > li:hover {
   background: #FFF;
+}
+
+#about.hidden {
+  display: none;
+}
+
+button.about-button {
+  border: none;
 }

@@ -4,10 +4,55 @@
     <meta charset="UTF-8" />
     <link rel="icon" href="/favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Starsy — Star System Generator</title>
+    <title>Starsy | Interactive Star System Orbit Mapper for Sci-Fi RPGs</title>
+    <meta name="description" content="Simple webapp for linear orbit maps of star systems">
+    <meta name="description" content="Create beautiful linear orbit maps of star systems with Starsy - the simple, interactive tool designed for sci-fi RPG sessions and more.">
+    <meta property="og:title" content="Starsy - Star System Orbit Mapper">
+    <meta property="og:description" content="Create beautiful linear orbit maps for your sci-fi RPG sessions with this simple, interactive tool.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://starsy.netlify.app">
+    <meta property="og:image" content="https://starsy.netlify.app/scrot.jpg">
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Starsy",
+      "description": "Interactive tool for creating linear orbit maps of star systems for sci-fi RPGs",
+      "applicationCategory": "UtilityApplication",
+      "operatingSystem": "Web",
+      "screenshot": "https://starsy.netlify.app/scrot.jpg",
+      "url": "https://starsy.netlify.app",
+      "keywords": "star system mapper, orbital visualization, sci-fi RPG tools, astronomy mapping",
+      "author": {
+        "@type": "Person",
+        "name": "koehr (https://koehr.ing)"
+      },
+      "featureList": "Linear orbit mapping, star system visualization, customizable planetary bodies, export functionality",
+      "permissions": "Local Font API"
+    }
+    </script>
   </head>
   <body class="theme-inverse">
     <div id="app"></div>
+    <div id="about" class="hidden">
+      <div class="content">
+        <header class="modal-header">
+          <h1>About Starsy</h1>
+        </header>
+
+        <div class="modal-content">
+          <p>Welcome to Starsy, the elegant star system mapper designed with sci-fi RPG game masters in mind. The interactive star system designer brings the cosmos to your fingertips, allowing you to craft detailed stellar configurations for your gaming sessions or creative projects.</p>
+          <p>Starsy stands out as a specialized astronomy visualization tool that simplifies the complex process of stellar cartography. With an intuitive interface, you can quickly create linear orbit maps of any star system you envision, from scientifically plausible to imaginatively fantastic.</p>
+          <p>Developed by game-masters for game-masters, to enhance sci-fi RPG experiences, add astronomical depth to storytelling without getting lost in technical complexity.</p>
+          <p>Whether you're plotting the next adventure for your tabletop campaign or designing an entire galactic sector, this stellar cartography tool provides the perfect balance of simplicity and detail. As a linear orbit map creator, Starsy focuses on clear visual representation rather than overwhelming complex physics simulations.</p>
+          <p>
+            Join our community to share your maps and discuss on
+            <a href="https://reddit.com/r/starsy" target="blank" rel="noopener">r/reddit</a>.
+          </p>
+        </div>
+        <button class="close action" />
+      </div>
+    </div>
     <script type="module" src="/src/main.js"></script>
     <script data-goatcounter="https://starsy.goatcounter.com/count"
         async src="//gc.zgo.at/count.js"></script>

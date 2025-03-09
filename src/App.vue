@@ -43,6 +43,14 @@ const handleAppMenuSelection = (selection: string) => {
       break
   }
 }
+
+function showAbout() {
+  const aboutEl = document.getElementById('about')
+  if (!aboutEl) return
+
+  aboutEl.classList.remove('hidden')
+  aboutEl.addEventListener('click', () => aboutEl.classList.add('hidden'))
+}
 </script>
 
 <template>
@@ -84,7 +92,8 @@ const handleAppMenuSelection = (selection: string) => {
     <a target="_blank" rel="noopener" href="https://koehr.ing">koehr</a> |
     © 2022 - today |
     <a target="_blank" rel="noopener" href="https://reddit.com/r/starsy">discuss on reddit</a> |
-    <a target="_blank" rel="noopener" href="https://github.com/nkoehring/starsy">open source</a>
+    <a target="_blank" rel="noopener" href="https://github.com/nkoehring/starsy">open source</a> |
+    <button class="about-button" type="button" @click="showAbout()">about starsy</button>
   </footer>
 
   <div id="modal-container" v-if="isModalShown">
