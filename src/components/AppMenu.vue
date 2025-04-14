@@ -9,7 +9,7 @@ const shownSlot = ref(props.defaultSlot || Object.keys(slots)[0] || 'default')
 </script>
 
 <template>
-  <div class="info">
+  <div class="tabbed-menu">
     <header>
       <button v-for="(_, slot) in slots"
         :key="slot"

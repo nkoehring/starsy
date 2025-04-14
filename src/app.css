@@ -88,6 +88,7 @@ button.move { background-image: url(./assets/move.png); }
 button.dice { background-image: url(./assets/dice.png); }
 button.edit { background-image: url(./assets/pencil.png); }
 button.menu { background-image: url(./assets/menu.png); }
+button.link { background-image: url(./assets/link.png); }
 
 button.action.example.bright { background-image: url(./assets/dice_inverted.png); }
 button.action.example.dark { margin-left: .2em; background-image: url(./assets/dice.png); }
@@ -100,6 +101,7 @@ button.action.example.dark { margin-left: .2em; background-image: url(./assets/d
 :root.bright-theme button.dice { background-image: url(./assets/dice_inverted.png); }
 :root.bright-theme button.edit { background-image: url(./assets/pencil_inverted.png); }
 :root.bright-theme button.menu { background-image: url(./assets/menu_inverted.png); }
+:root.bright-theme button.link { background-image: url(./assets/link_inverted.png); }
 
 button.small {
   width: 24px;
@@ -107,15 +109,13 @@ button.small {
   background-size: 24px;
 }
 
-.info {
-  width: calc(100% - 4em);
-  margin-left: -1em;
-  padding: 1em 2em;
+.tabbed-menu {
+  padding: 2em 1.5em;
   border: 2px solid #8888;
   border-left-width: 1em;
 }
-.info > header { font-weight: bold; }
-.info > li { margin-top: .75em; }
+.tabbed-menu > header { font-weight: bold; }
+.tabbed-menu > li { margin-top: .75em; }
 
 svg { background: var(--bg-graphic); }
 line { stroke: var(--fg-graphic); }
@@ -131,7 +131,9 @@ line { stroke: var(--fg-graphic); }
 .object.selected > line, .object.selected .rings { stroke: var(--hl-graphic); }
 
 h1 {
-  font-family: xolonium;
+  font-size: 2rem;
+  font-family: var(--title-font);
+  text-align: center;
 }
 
 a, button.about-button { color: #AAF; text-decoration: underline; margin: 0; padding: 0; }
@@ -142,8 +144,8 @@ a, button.about-button { color: #AAF; text-decoration: underline; margin: 0; pad
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2em;
-  font-family: xolonium;
+  padding: 0 2rem;
+  font-family: var(--title-font);
 }
 #app > header label {
   margin: 0 0 0 1em;
@@ -157,18 +159,16 @@ a, button.about-button { color: #AAF; text-decoration: underline; margin: 0; pad
   align-items: center;
 }
 
-#settings {
-  max-width: 700px;
+#settings, #report {
+  max-width: 800px;
   margin: auto;
   padding: 1em 2em;
 }
+#report > header,
 #settings > header {
   display: flex;
   flex-flow: column nowrap;
-  align-items: center;
-}
-#settings > header > h1 {
-  min-width: 330px;
+  margin: 2em 0 0;
 }
 
 #system-settings {
@@ -490,4 +490,17 @@ menu.popup-menu > li:hover {
 
 button.about-button {
   border: none;
+}
+
+#report {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+@media print {
+  #app > header { visibility: hidden;}
+  #settings { display: none; }
+  #modal-container { display: none; }
+  #app > footer { display: none; }
 }

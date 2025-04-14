@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { Planet } from '../types'
-import { ref, computed } from 'vue'
+import { ref, computed, useTemplateRef, defineExpose } from 'vue'
 import useObjects from '../useObjects'
-// import { getStarColor } from '../utils'
+
+const svgEl = useTemplateRef('system-diagram')
+defineExpose({ svgEl })
 
 const {
   star,
@@ -74,7 +76,7 @@ const resizeObject = (event: WheelEvent) => {
 </script>
 
 <template>
-  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 300">
+  <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1000 300" ref="system-diagram">
     <line id="axis" x1="0" y1="150" x2="1000" y2="150" />
     <circle id="star" :r="star.radius" :cx="starCX" cy="150" />
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, useTemplateRef } from 'vue'
 
 import Headline from './components/Headline.vue'
 import SystemDiagram from './components/SystemDiagram.vue'
@@ -12,6 +12,8 @@ import PresetLoader from './components/PresetLoader.vue'
 import PresetSaver from './components/PresetSaver.vue'
 import ThemeEditor from './components/ThemeEditor.vue'
 import PopupMenu from './components/PopupMenu.vue'
+import SystemReport from './components/SystemReport.vue'
+import Export from './components/Export.vue'
 
 import useObjects from './useObjects'
 import useTheme from './useTheme'
@@ -20,13 +22,15 @@ import useModal from './useModal'
 import useAppMenu from './useAppMenu'
 import { getStarColor } from './utils'
 
-const { selectedObject, star } = useObjects()
+const { selectedObject, star, primaryBodies } = useObjects()
 const { fonts, themes, currentTheme, applyTheme } = useTheme()
 const { loadFont } = useLocalFonts()
 const { isModalShown, ModalContent, modalData, showModal, hideModal } = useModal()
 const { isShowingMenu, appMenuPosition, toggleAppMenu } = useAppMenu()
 
-const isPrintingMode = ref(false)
+const systemDiagram = useTemplateRef('system-diagram')
+const svgEl = computed(() => systemDiagram.value?.svgEl)
+
 const starColor = computed(() => {
   const auto = currentTheme.value.fillStar === 'auto'
   if (auto) return getStarColor(star.radius)
@@ -60,13 +64,13 @@ function showAbout() {
 </script>
 
 <template>
-  <Headline v-show="!isPrintingMode"
+  <Headline
     v-bind="{ fonts, themes, currentTheme }"
     @select:theme="applyTheme($event)"
     @select:menu="toggleAppMenu($event)"
   />
 
-  <SystemDiagram :style="{ '--fill-star': starColor }" />
+  <SystemDiagram :style="{ '--fill-star': starColor }" ref="system-diagram" />
 
   <section id="settings">
     <ObjectSettings v-if="selectedObject" />
@@ -80,6 +84,9 @@ function showAbout() {
           <li>Click on a planet to get more tips.</li>
         </ul>
       </template>
+      <template #download>
+        <Export :svg-el />
+      </template>
       <template #load>
         <PresetLoader />
       </template>
@@ -90,8 +97,17 @@ function showAbout() {
         <!-- empty template to "close" the menu -->
       </template>
     </AppMenu>
-    <SystemSettings />
-    <ObjectList />
+
+    <AppMenu default-slot="system-structure">
+      <template #system-structure>
+        <SystemSettings />
+        <ObjectList />
+      </template>
+      <template #system-information>
+        <SystemReport v-bind="{ star, primaryBodies }" />
+      </template>
+    </AppMenu>
+    
   </section>
 
   <footer>
