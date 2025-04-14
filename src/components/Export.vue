@@ -37,8 +37,7 @@ watch(imageHeight, h => {
 
 const { star, primaryBodies } = useObjects()
 const { currentName } = useStorage(star, primaryBodies)
-
-const { exportPNG } = useExport(currentName.value, props.svgEl)
+const { exportPNG } = useExport(props.svgEl)
 
 function toggleEnforceRatio() {
   if (linkedRatio.value) {
@@ -71,7 +70,7 @@ function toggleEnforceRatio() {
       <input placeholder="600" v-model.number="imageHeight" type="number" min="3" />
     </div>
   </div>
-  <button class="image-download-cta" @click="exportPNG(imageWidth, imageHeight)">
+  <button class="image-download-cta" @click="exportPNG(currentName, imageWidth, imageHeight)">
     download starsy-{{ currentName }}.png
   </button>
 </template>

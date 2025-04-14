@@ -95,11 +95,11 @@ const exportSVG = (name: string, svgEl: SVGGraphicsElement) => {
   link.click()
 }
 
-export default function useExport(name: string, svgEl: SVGGraphicsElement) {
+export default function useExport(svgEl: SVGGraphicsElement) {
   // const { targetEl, bgColor } = createSVGExportElement(svgEl)
 
   return {
-    exportPNG: (width = 2000, height = 600) => exportPNG(`starsy-${name}`, svgEl, width, height),
+    exportPNG: (name: string, width = 2000, height = 600) => exportPNG(`starsy-${name}`, svgEl, width, height),
     exportSVG: () => exportSVG(`starsy-${name}`, svgEl),
   }
 }

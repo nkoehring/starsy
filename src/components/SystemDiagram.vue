@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Planet } from '../types'
-import { ref, computed, useTemplateRef, defineExpose } from 'vue'
+import { ref, computed, useTemplateRef } from 'vue'
 import useObjects from '../useObjects'
 
 const svgEl = useTemplateRef('system-diagram')
