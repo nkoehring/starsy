@@ -2,11 +2,11 @@
 
 **Interactive Star System Orbit Mapper for Sci-Fi RPGs**
 
-Feel free to try it right away at [starsy.netlify.app](https://starsy.netlify.app).
+Feel free to try it right away at [solar.system.netlify.app](https://solar.system.netlify.app).
 
 Starsy is a simple, interactive tool for creating beautiful linear obrit maps of star systems.
 
-![screenshot](https://starsy.netlify.app/scrot.jpg)
+![screenshot](https://solar.system.netlify.app/scrot.jpg)
 
 Join our Reddit community: [r/Starsy](https://www.reddit.com/r/Starsy/)!
 
@@ -28,11 +28,12 @@ Join our Reddit community: [r/Starsy](https://www.reddit.com/r/Starsy/)!
 
 ✅ Export / Import system to disk or LocalStorage
 
+✅ astroid belts
+
 ❌ randomly generate star system
 
 ❌ Meta data for all objects, like inhabitants, factions, resources
 
-❌ astroid belts
 
 ❌ Export graphic via print or PDF
 
