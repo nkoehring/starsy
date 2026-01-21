@@ -24,15 +24,17 @@ Join our Reddit community: [r/Starsy](https://www.reddit.com/r/Starsy/)!
 
 ✅ Last removed object (planet) can be restored
 
-✅ add new planets and satellites
+✅ add new planets,Dwarf Planets and satellites
 
 ✅ Export / Import system to disk or LocalStorage
+
+✅ Last removed object (dwarf planet) can be restored
 
 ❌ randomly generate star system
 
 ❌ Meta data for all objects, like inhabitants, factions, resources
 
-❌ astroid belts
+✅ astroid belts
 
 ❌ Export graphic via print or PDF
 
@@ -41,7 +43,7 @@ Missing features above are all planned for 0.5 release version. Future versions 
 
 ⁉ Export a single- or multi-page report / dossier / pamphlet
 
-⁉ (faction?) Icons for planets / moons / stations
+⁉ (faction?) Icons for planets / dwarf planets / moons / stations / hypotheticals
 
 ⁉ More object types (stations orbiting the star, mega structures?)
 
