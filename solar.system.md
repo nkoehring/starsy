@@ -24,15 +24,16 @@ Join our Reddit community: [r/Starsy](https://www.reddit.com/r/Starsy/)!
 
 ✅ Last removed object (planet) can be restored
 
-✅ add new planets and satellites
+✅ add new planets,dwarf planets and satellites
 
 ✅ Export / Import system to disk or LocalStorage
+
+✅ astroid belts
 
 ❌ randomly generate star system
 
 ❌ Meta data for all objects, like inhabitants, factions, resources
 
-❌ astroid belts
 
 ❌ Export graphic via print or PDF
 
@@ -50,7 +51,7 @@ Missing features above are all planned for 0.5 release version. Future versions 
 
 ## Acknowledgements
 
-Original idea from [Tanner Stephens Star System Generator](https://tannerstephens.com/star-system-creator/) and a post from [/u/koboldstyle on reddit](https://www.reddit.com/r/SWN/comments/cp4bkq/easy_solar_system_map_creator/ewp61ca/).
+Remixed by me idea from [Tanner Stephens Star System Generator](https://tannerstephens.com/solar-system-creator/) and a post from [/u/koboldstyle on reddit](https://www.reddit.com/r/SWN/comments/cp4bkq/easy_solar_system_map_creator/ewp61ca/).
 
 The visual style is highly inspired by a [tweet from Anders Björkman](https://twitter.com/AndersGBjorkman/status/1006199432927436802).
 
